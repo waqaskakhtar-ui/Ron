@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shop Editorial Collections &mdash; RON Hardware Atelier</title>
+  <meta name="description" content="Explore the full editorial catalog of Ron custom phone cases: Carbon Fiber, Full-Grain Leather, Minimalist Matte, and Kinetic Armor.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- GSAP 3 & ScrollTrigger for Awwwards-Level Fluid Motion -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%235336CC'/><text y='.75em' x='50%' text-anchor='middle' font-family='sans-serif' font-weight='900' font-size='60' fill='%23FEFEFF'>R</text></svg>">
+</head>
+<body class="bg-[#FEFEFF] text-[#252425] selection:bg-[#5336CC] selection:text-[#FEFEFF]">
+
+  <canvas id="ron-ambient-canvas" class="fixed inset-0 pointer-events-none z-0 opacity-75"></canvas>
+
+  <!-- Top Announcement Bar -->
+  <div class="ron-top-bar">
+    <div class="ron-container flex justify-between items-center text-[11px] uppercase tracking-widest text-[#B4B0BE]">
+      <div class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-[#5336CC] inline-block shadow-[0_0_8px_#5336CC] animate-pulse"></span>
+        <span>Studio Batch 09 &middot; Hand-Finished in Limited Quantities</span>
+      </div>
+      <div class="hidden sm:flex items-center gap-6">
+        <span>Complimentary Express Worldwide Courier on orders over $120</span>
+        <span class="text-[#8B77A4]/40">|</span>
+        <span>15-Year Structural Guarantee</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Global Header Navigation -->
+  <header class="ron-nav-wrapper">
+    <div class="ron-container">
+      <nav class="ron-nav">
+        <a href="index.html" class="ron-logo group">
+          <div class="ron-logo-mark">R</div>
+          <span class="tracking-tight text-2xl font-black">RON</span>
+        </a>
+
+        <ul class="ron-nav-links">
+          <li><a href="index.html" class="ron-nav-link">Overview</a></li>
+          <li><a href="shop.html" class="ron-nav-link active">Shop</a></li>
+          <li><a href="customizer.html" class="ron-nav-link">On-Demand</a></li>
+          <li><a href="craft.html" class="ron-nav-link">The Craft</a></li>
+        </ul>
+
+        <div class="ron-nav-actions">
+          <select class="ron-currency-select" aria-label="Select Currency">
+            <option value="USD">USD ($)</option>
+            <option value="EUR">EUR (€)</option>
+            <option value="GBP">GBP (£)</option>
+            <option value="JPY">JPY (¥)</option>
+          </select>
+
+          <button id="ron-cart-toggle" class="ron-cart-btn" aria-label="Open Bag">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+              <line x1="3" y1="6" x2="21" y2="6"/>
+              <path d="M16 10a4 4 0 0 1-8 0"/>
+            </svg>
+            <span>Bag</span>
+            <span id="ron-cart-badge" class="ron-cart-badge">0</span>
+          </button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="relative z-10">
+    <!-- Page Header -->
+    <section class="pt-16 pb-12 border-b border-[#8B77A4]/20 bg-[#F6F5F9]/60">
+      <div class="ron-container">
+        <div class="micro-label mb-3">HARDWARE ARCHIVE & CATALOG</div>
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+          <div>
+            <h1 class="font-display text-4xl sm:text-6xl text-[#252425] text-split-reveal">The Editorial Lookbook.</h1>
+            <p class="text-[#5A585B] text-base max-w-xl mt-3 font-light">
+              High-fashion lifestyle meets precision 3D engineering. Filter by device, series, and toggle between Editorial Model View and 3D Studio Focus.
+            </p>
+          </div>
+          
+          <div class="flex flex-wrap items-center gap-4">
+            <!-- Mode Dual-Toggle: Model View vs 3D Studio Focus View -->
+            <div class="flex items-center p-1 bg-white border border-[#8B77A4]/30 rounded-xl shadow-sm">
+              <button id="mode-studio-btn" class="px-3.5 py-1.5 rounded-lg text-xs font-mono font-bold transition bg-[#5336CC] text-white">3D Studio</button>
+              <button id="mode-model-btn" class="px-3.5 py-1.5 rounded-lg text-xs font-mono font-bold transition text-[#5A585B] hover:text-[#5336CC]">Editorial Model</button>
+            </div>
+
+            <!-- Adaptive Grid Switcher -->
+            <div class="flex items-center p-1 bg-white border border-[#8B77A4]/30 rounded-xl shadow-sm">
+              <button id="view-3col-btn" class="px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition bg-[#5336CC] text-white" title="3-Column View">3-COL</button>
+              <button id="view-4col-btn" class="px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition text-[#5A585B] hover:text-[#5336CC]" title="4-Column View">4-COL</button>
+            </div>
+            
+            <div class="font-mono text-xs text-[#8B77A4] font-bold">
+              <span id="catalog-count" class="text-[#5336CC] font-bold text-sm">8</span> EDITIONS
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sticky Floating Filter Deck -->
+    <section class="sticky top-[72px] z-40 bg-[#FEFEFF]/90 backdrop-blur-xl border-b border-[#8B77A4]/20 py-4 shadow-sm">
+      <div class="ron-container">
+        <div class="flex flex-wrap items-center justify-between gap-4">
+          
+          <div class="flex flex-wrap items-center gap-3">
+            <!-- Series Categories -->
+            <div class="flex items-center gap-1.5 p-1 bg-white border border-[#8B77A4]/25 rounded-xl shadow-sm">
+              <button class="filter-category-btn px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition active bg-[#5336CC] text-white" data-cat="all">All Series</button>
+              <button class="filter-category-btn px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition text-[#5A585B] hover:text-[#5336CC]" data-cat="stealth">Stealth</button>
+              <button class="filter-category-btn px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition text-[#5A585B] hover:text-[#5336CC]" data-cat="minimal">Minimal</button>
+              <button class="filter-category-btn px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition text-[#5A585B] hover:text-[#5336CC]" data-cat="armor">Armor</button>
+            </div>
+
+            <!-- Device Selector Dropdown -->
+            <select id="filter-device" class="bg-white border border-[#8B77A4]/25 rounded-xl px-4 py-2 text-xs font-mono text-[#252425] outline-none focus:border-[#5336CC] shadow-sm cursor-pointer">
+              <option value="all">All Devices (iPhone, Galaxy, Pixel)</option>
+              <option value="iPhone 16 Pro Max">iPhone 16 Pro Max</option>
+              <option value="iPhone 16 Pro">iPhone 16 Pro</option>
+              <option value="Galaxy S25 Ultra">Samsung Galaxy S25 Ultra</option>
+              <option value="Pixel 9 Pro">Google Pixel 9 Pro</option>
+            </select>
+
+            <!-- Feature Tag Dropdown -->
+            <select id="filter-feature" class="bg-white border border-[#8B77A4]/25 rounded-xl px-4 py-2 text-xs font-mono text-[#252425] outline-none focus:border-[#5336CC] shadow-sm cursor-pointer">
+              <option value="all">All Features (MagSafe, Armor, Slim)</option>
+              <option value="MagSafe">MagSafe 18N</option>
+              <option value="Ultra Armor">Ultra Armor (16ft Drop)</option>
+              <option value="Slim Fit">Slim Fit (0.8mm)</option>
+            </select>
+
+            <!-- Material Finish Dropdown -->
+            <select id="filter-finish" class="bg-white border border-[#8B77A4]/25 rounded-xl px-4 py-2 text-xs font-mono text-[#252425] outline-none focus:border-[#5336CC] shadow-sm cursor-pointer">
+              <option value="all">All Finishes (Carbon, Leather, Clear)</option>
+              <option value="carbon">3K Carbon Fiber</option>
+              <option value="leather">Italian Nappa Leather</option>
+              <option value="matte">Matte Nanocoat</option>
+              <option value="clear">Frosted Crystal</option>
+            </select>
+          </div>
+
+          <!-- Sort Select -->
+          <div class="flex items-center gap-3">
+            <span class="text-xs font-mono text-[#8B77A4] hidden sm:inline font-bold">SORT:</span>
+            <select id="sort-select" class="bg-white border border-[#8B77A4]/25 rounded-xl px-4 py-2 text-xs font-mono text-[#252425] outline-none focus:border-[#5336CC] shadow-sm cursor-pointer">
+              <option value="featured">Featured Editions</option>
+              <option value="price-asc">Price: Low to High</option>
+              <option value="price-desc">Price: High to Low</option>
+              <option value="rating">Top Rated (4.9+)</option>
+            </select>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Product Grid Section -->
+    <section class="ron-section ron-section-lg">
+      <div class="ron-container">
+        <!-- Adaptive Grid -->
+        <div id="product-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- Rendered dynamically via JS -->
+        </div>
+
+        <div id="no-products-msg" class="hidden flex-col items-center justify-center py-24 text-center">
+          <div class="w-16 h-16 rounded-full bg-[#5336CC]/10 border border-[#8B77A4]/20 flex items-center justify-center mb-4 text-[#5336CC]">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          </div>
+          <h3 class="font-heading text-xl text-[#252425] mb-2 font-bold">No matching cases found</h3>
+          <p class="text-sm text-[#5A585B] max-w-sm mb-6">Adjust your device, series, or feature filters to view matching hardware runs.</p>
+          <button id="reset-filters-btn" class="ron-btn ron-btn-primary ron-btn-sm">Reset All Filters</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Customizer Callout Banner -->
+    <section class="pb-24">
+      <div class="ron-container">
+        <div class="bg-gradient-to-r from-[#252425] via-[#1E1D1E] to-[#252425] text-white border border-[#8B77A4]/30 rounded-3xl p-10 sm:p-14 flex flex-col md:flex-row items-center justify-between gap-8 shadow-2xl">
+          <div>
+            <span class="micro-label white mb-3">BESPOKE LASER ENGRAVING</span>
+            <h3 class="font-heading text-2xl sm:text-3xl text-[#FEFEFF] mb-2">Want your initials or custom logo on any case?</h3>
+            <p class="text-sm text-[#B4B0BE] max-w-xl">Every case model can be personalized with our laser deboss, 24K gold foil, or ultraviolet glow engine.</p>
+          </div>
+          <a href="customizer.html" class="ron-btn ron-btn-primary flex-shrink-0 shadow-lg">Launch Bespoke Customizer &rarr;</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Global Slide-Out Cart Drawer -->
+  <div id="ron-cart-overlay" class="ron-cart-drawer-overlay">
+    <div class="ron-cart-drawer">
+      <div class="ron-cart-header">
+        <div class="flex items-center gap-3">
+          <h3 class="font-heading text-lg font-bold text-[#252425]">Your Shopping Bag</h3>
+          <span class="text-xs font-mono text-[#5336CC] font-bold uppercase tracking-wider">RON ATELIER</span>
+        </div>
+        <button id="ron-cart-close" class="ron-cart-close" aria-label="Close Bag">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <div class="px-7 pt-4 bg-[#F8F7FB]">
+        <div id="ron-free-shipping-msg" class="text-xs font-mono text-[#5A585B]"></div>
+        <div class="ron-progress-track">
+          <div id="ron-free-shipping-bar" class="ron-progress-bar" style="width: 0%"></div>
+        </div>
+      </div>
+
+      <div id="ron-cart-items-list" class="ron-cart-items"></div>
+
+      <div class="ron-cart-footer">
+        <div class="flex gap-2 mb-4">
+          <input id="ron-promo-input" type="text" placeholder="PROMO CODE (e.g. RON15)" class="flex-1 bg-white border border-[#8B77A4]/25 rounded-xl px-4 py-2 text-xs font-mono text-[#252425] placeholder-[#8B77A4] uppercase outline-none focus:border-[#5336CC]" />
+          <button id="ron-promo-apply" class="ron-btn ron-btn-secondary ron-btn-sm px-4">Apply</button>
+        </div>
+
+        <div class="space-y-2 mb-5 font-mono text-xs">
+          <div class="flex justify-between text-[#5A585B]">
+            <span>Subtotal</span>
+            <span id="ron-cart-subtotal" class="text-[#252425] font-bold">$0.00</span>
+          </div>
+          <div id="ron-cart-discount-row" class="flex justify-between text-[#5336CC]" style="display: none;">
+            <span>Privilege Discount</span>
+            <span id="ron-cart-discount">-$0.00</span>
+          </div>
+          <div class="flex justify-between text-[#5A585B]">
+            <span>Express Courier</span>
+            <span id="ron-cart-shipping" class="text-[#252425] font-bold">$12.00</span>
+          </div>
+          <div class="flex justify-between text-base pt-3 border-t border-[#8B77A4]/20 text-[#252425] font-black">
+            <span>Total</span>
+            <span id="ron-cart-total" class="text-[#5336CC]">$0.00</span>
+          </div>
+        </div>
+
+        <a href="checkout.html" class="ron-btn ron-btn-primary w-full justify-center shadow-xl">
+          <span>Proceed to Secure Checkout</span>
+          <span class="font-mono text-xs">&rarr;</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Global Footer -->
+  <footer class="ron-footer">
+    <div class="ron-container">
+      <div class="ron-footer-grid">
+        <div class="space-y-6">
+          <a href="index.html" class="ron-logo text-[#FEFEFF]">
+            <div class="ron-logo-mark">R</div>
+            <span class="tracking-tight text-white font-black">RON</span>
+          </a>
+          <p class="text-sm text-[#B4B0BE] max-w-sm leading-relaxed font-light">
+            Ron is a high-precision design atelier engineering bespoke custom phone cases for the world's most discerning tech lifestyle enthusiasts.
+          </p>
+          <form id="ron-newsletter-form" class="space-y-3">
+            <div class="text-xs font-mono uppercase tracking-wider text-[#FEFEFF] font-bold">Studio Roster & Drop Registry</div>
+            <div class="flex gap-2">
+              <input type="email" placeholder="architect@domain.com" required class="bg-white/10 border border-white/20 rounded-xl px-4 py-2.5 text-xs text-white placeholder-white/40 font-mono outline-none focus:border-[#5336CC] flex-1" />
+              <button type="submit" class="ron-btn ron-btn-primary ron-btn-sm px-5">Join</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="ron-footer-col">
+          <h4>Navigation</h4>
+          <ul class="ron-footer-links">
+            <li><a href="index.html">Overview</a></li>
+            <li><a href="shop.html">Shop Catalog</a></li>
+            <li><a href="customizer.html">Interactive Customizer</a></li>
+            <li><a href="craft.html">The Craft & Materials</a></li>
+            <li><a href="checkout.html">Checkout Bag</a></li>
+          </ul>
+        </div>
+
+        <div class="ron-footer-col">
+          <h4>Collections</h4>
+          <ul class="ron-footer-links">
+            <li><a href="shop.html?category=stealth">Ron Stealth (Carbon)</a></li>
+            <li><a href="shop.html?category=minimal">Ron Minimal (Leather)</a></li>
+            <li><a href="shop.html?category=armor">Ron Kinetic Armor</a></li>
+            <li><a href="shop.html?finish=clear">Frosted Crystal Series</a></li>
+            <li><a href="customizer.html">Monogram Engraving</a></li>
+          </ul>
+        </div>
+
+        <div class="ron-footer-col">
+          <h4>Engineering</h4>
+          <ul class="ron-footer-links">
+            <li><a href="craft.html#mil-spec">16ft Mil-Spec Drop Lab</a></li>
+            <li><a href="craft.html#tolerances">0.12mm CNC Tolerances</a></li>
+            <li><a href="craft.html#sustainability">Recycled Composites</a></li>
+            <li><a href="#">15-Year Guarantee</a></li>
+            <li><a href="#">Global Courier Tracking</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="py-4 border-t border-white/10 flex flex-wrap justify-between items-center text-xs font-mono text-[#8B8796]">
+        <div id="ron-live-clock">LAB TIME: 00:00:00 UTC &middot; TOKYO / SF / LONDON</div>
+        <div class="flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-[#5336CC] animate-ping"></span>
+          <span>SYSTEM STATUS: OPERATIONAL</span>
+        </div>
+      </div>
+
+      <div class="ron-footer-bottom">
+        <div>&copy; 2026 RON PRECISION HARDWARE LABS INC. ALL RIGHTS RESERVED.</div>
+        <div class="flex items-center gap-6">
+          <a href="#" class="hover:text-white transition">Privacy Architecture</a>
+          <a href="#" class="hover:text-white transition">Terms of Service</a>
+          <a href="#" class="hover:text-white transition">Certificate Registry</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script type="module">
+    import { CATALOG, cart, showToast, sounds } from './js/store.js';
+    import { initGlobalUI, updatePagePrices } from './js/app.js';
+    import { initMaterialLensMagnifiers, initMagneticElements, initMotion } from './js/motion.js';
+
+    initGlobalUI();
+    initMotion();
+
+    const grid = document.getElementById('product-grid');
+    const noProductsMsg = document.getElementById('no-products-msg');
+    const countBadge = document.getElementById('catalog-count');
+    const categoryBtns = document.querySelectorAll('.filter-category-btn');
+    const deviceSelect = document.getElementById('filter-device');
+    const featureSelect = document.getElementById('filter-feature');
+    const finishSelect = document.getElementById('filter-finish');
+    const sortSelect = document.getElementById('sort-select');
+    const resetFiltersBtn = document.getElementById('reset-filters-btn');
+
+    const view3ColBtn = document.getElementById('view-3col-btn');
+    const view4ColBtn = document.getElementById('view-4col-btn');
+    const modeModelBtn = document.getElementById('mode-model-btn');
+    const modeStudioBtn = document.getElementById('mode-studio-btn');
+
+    let currentCat = 'all';
+    let currentDevice = 'all';
+    let currentFeature = 'all';
+    let currentFinish = 'all';
+    let currentSort = 'featured';
+    let is4Col = false;
+    let isModelMode = false; // false = Studio Focus (matching homepage), true = Editorial Model
+
+    // Dual-Mode Toggle
+    modeStudioBtn?.addEventListener('click', () => {
+      sounds.click('soft');
+      isModelMode = false;
+      modeStudioBtn.classList.add('bg-[#5336CC]', 'text-white');
+      modeStudioBtn.classList.remove('text-[#5A585B]');
+      modeModelBtn.classList.remove('bg-[#5336CC]', 'text-white');
+      modeModelBtn.classList.add('text-[#5A585B]');
+      renderCatalog();
+    });
+
+    modeModelBtn?.addEventListener('click', () => {
+      sounds.click('soft');
+      isModelMode = true;
+      modeModelBtn.classList.add('bg-[#5336CC]', 'text-white');
+      modeModelBtn.classList.remove('text-[#5A585B]');
+      modeStudioBtn.classList.remove('bg-[#5336CC]', 'text-white');
+      modeStudioBtn.classList.add('text-[#5A585B]');
+      renderCatalog();
+    });
+
+    // Grid Column Switcher
+    view3ColBtn?.addEventListener('click', () => {
+      sounds.click('soft');
+      is4Col = false;
+      view3ColBtn.classList.add('bg-[#5336CC]', 'text-white');
+      view3ColBtn.classList.remove('text-[#5A585B]');
+      view4ColBtn.classList.remove('bg-[#5336CC]', 'text-white');
+      view4ColBtn.classList.add('text-[#5A585B]');
+      grid.className = 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8';
+    });
+
+    view4ColBtn?.addEventListener('click', () => {
+      sounds.click('soft');
+      is4Col = true;
+      view4ColBtn.classList.add('bg-[#5336CC]', 'text-white');
+      view4ColBtn.classList.remove('text-[#5A585B]');
+      view3ColBtn.classList.remove('bg-[#5336CC]', 'text-white');
+      view3ColBtn.classList.add('text-[#5A585B]');
+      grid.className = 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6';
+    });
+
+    // Category button selection
+    categoryBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        sounds.click('soft');
+        categoryBtns.forEach(b => {
+          b.classList.remove('bg-[#5336CC]', 'text-white');
+          b.classList.add('text-[#5A585B]');
+        });
+        btn.classList.add('bg-[#5336CC]', 'text-white');
+        btn.classList.remove('text-[#5A585B]');
+        currentCat = btn.getAttribute('data-cat');
+        renderCatalog();
+      });
+    });
+
+    deviceSelect?.addEventListener('change', (e) => {
+      currentDevice = e.target.value;
+      renderCatalog();
+    });
+
+    featureSelect?.addEventListener('change', (e) => {
+      currentFeature = e.target.value;
+      renderCatalog();
+    });
+
+    finishSelect?.addEventListener('change', (e) => {
+      currentFinish = e.target.value;
+      renderCatalog();
+    });
+
+    sortSelect?.addEventListener('change', (e) => {
+      currentSort = e.target.value;
+      renderCatalog();
+    });
+
+    resetFiltersBtn?.addEventListener('click', () => {
+      currentCat = 'all';
+      currentDevice = 'all';
+      currentFeature = 'all';
+      currentFinish = 'all';
+      currentSort = 'featured';
+      if (deviceSelect) deviceSelect.value = 'all';
+      if (featureSelect) featureSelect.value = 'all';
+      if (finishSelect) finishSelect.value = 'all';
+      if (sortSelect) sortSelect.value = 'featured';
+      categoryBtns.forEach((b, idx) => {
+        if (idx === 0) {
+          b.classList.add('bg-[#5336CC]', 'text-white');
+          b.classList.remove('text-[#5A585B]');
+        } else {
+          b.classList.remove('bg-[#5336CC]', 'text-white');
+          b.classList.add('text-[#5A585B]');
+        }
+      });
+      renderCatalog();
+    });
+
+    // URL parameter parsing for deep-linking
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchQuery = urlParams.get('search') ? urlParams.get('search').toLowerCase() : null;
+    const productParam = urlParams.get('product');
+    if (urlParams.get('category')) currentCat = urlParams.get('category');
+    if (urlParams.get('finish')) currentFinish = urlParams.get('finish');
+
+    function renderCatalog() {
+      let filtered = CATALOG.filter(item => {
+        if (productParam && item.id !== productParam) return false;
+        if (searchQuery && !item.name.toLowerCase().includes(searchQuery) && !item.subtitle?.toLowerCase().includes(searchQuery)) return false;
+        if (currentCat !== 'all' && item.category !== currentCat) return false;
+        if (currentFinish !== 'all' && item.finish !== currentFinish) return false;
+        if (currentDevice !== 'all' && (!item.compatibleDevices || !item.compatibleDevices.includes(currentDevice))) return false;
+        if (currentFeature !== 'all' && item.featureTag !== currentFeature) return false;
+        return true;
+      });
+
+      if (currentSort === 'price-asc') {
+        filtered.sort((a, b) => a.priceUSD - b.priceUSD);
+      } else if (currentSort === 'price-desc') {
+        filtered.sort((a, b) => b.priceUSD - a.priceUSD);
+      } else if (currentSort === 'rating') {
+        filtered.sort((a, b) => b.rating - a.rating);
+      }
+
+      if (countBadge) countBadge.textContent = filtered.length;
+
+      if (filtered.length === 0) {
+        grid.innerHTML = '';
+        noProductsMsg.classList.remove('hidden');
+        noProductsMsg.classList.add('flex');
+        return;
+      }
+
+      noProductsMsg.classList.add('hidden');
+      noProductsMsg.classList.remove('flex');
+
+      grid.innerHTML = filtered.map(item => `
+        <div class="ron-product-card group">
+          <!-- Dual-Image Hover Media with Lens Magnifier (Same as Homepage) -->
+          <a href="customizer.html?id=${item.id}" class="ron-product-media lens-magnifier-container block" title="Customize ${item.name}">
+            <span class="ron-badge">${item.badge}</span>
+            <img
+              src="${isModelMode ? (item.lifestyleImg || item.svgImg || item.studioImg) : (item.svgImg || item.studioImg)}"
+              alt="${item.name} primary"
+              class="img-studio"
+              loading="lazy"
+            />
+            <img
+              src="${isModelMode ? (item.svgImg || item.studioImg) : (item.lifestyleImg || item.svgImg || item.studioImg)}"
+              alt="${item.name} alternate"
+              class="img-lifestyle"
+              loading="lazy"
+            />
+          </a>
+
+          <!-- Product Info -->
+          <div class="ron-product-info">
+            <div class="ron-product-header">
+              <h3 class="ron-product-title">${item.name}</h3>
+              <span class="ron-product-price" data-usd="${item.priceUSD}">${cart.formatPrice(item.priceUSD)}</span>
+            </div>
+            
+            <p class="ron-product-subtitle">${item.subtitle}</p>
+
+            <div class="flex items-center gap-2 mb-4 text-xs font-mono">
+              <span class="text-[#5336CC] font-bold">★ ${item.rating.toFixed(2)}</span>
+              <span class="text-[#8B77A4]">(${item.reviewCount} reviews)</span>
+              <span class="ml-auto text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-[#5336CC]/10 text-[#5336CC]">${item.featureTag}</span>
+            </div>
+
+            <!-- Color Swatches -->
+            <div class="ron-product-colors">
+              ${item.colors.map((c, i) => `
+                <span class="ron-color-swatch" style="background-color: ${c};" title="${item.colorNames[i] || ''}"></span>
+              `).join('')}
+            </div>
+
+            <!-- Actions -->
+            <div class="ron-product-actions">
+              <a href="customizer.html?id=${item.id}" class="ron-btn ron-btn-primary ron-btn-sm flex-1">
+                Customize &rarr;
+              </a>
+              <button
+                class="ron-quick-add-btn ron-btn ron-btn-secondary ron-btn-sm px-3"
+                data-id="${item.id}"
+                title="Quick Add to Bag"
+              >
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+
+      // Wire quick add buttons
+      grid.querySelectorAll('.ron-quick-add-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const pId = btn.getAttribute('data-id');
+          const product = CATALOG.find(p => p.id === pId);
+          if (product) {
+            cart.addItem({
+              id: product.id,
+              name: product.name,
+              priceUSD: product.priceUSD,
+              device: product.defaultDevice,
+              finish: product.finish,
+              colorName: product.colorNames[0],
+              studioImg: product.studioImg,
+              monogramText: '',
+              magsafeStyle: 'machined'
+            });
+            showToast(`Added ${product.name} to Bag`, 'success', 'View Bag', () => {
+              document.getElementById('ron-cart-toggle')?.click();
+            });
+          }
+        });
+      });
+
+      updatePagePrices();
+      initMaterialLensMagnifiers();
+      initMagneticElements();
+
+      // GSAP Staggered Card Entrance Animation
+      if (window.gsap && grid.children.length > 0) {
+        window.gsap.fromTo(grid.children, 
+          { opacity: 0, y: 25, scale: 0.96 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.55, stagger: 0.04, ease: 'power3.out' }
+        );
+      }
+    }
+
+    renderCatalog();
+  </script>
+</body>
+</html>

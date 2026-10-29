@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bespoke 3D Customizer & PDP &mdash; RON Hardware Atelier</title>
+  <meta name="description" content="Sculpt your custom phone case in real time: aerospace carbon fiber, Italian leather, foil monogram engraving, live editorial model in-hand preview, and machined titanium hardware.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- GSAP 3 & ScrollTrigger for Awwwards-Level Fluid Motion -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%235336CC'/><text y='.75em' x='50%' text-anchor='middle' font-family='sans-serif' font-weight='900' font-size='60' fill='%23FEFEFF'>R</text></svg>">
+</head>
+<body class="bg-[#FEFEFF] text-[#252425] selection:bg-[#5336CC] selection:text-[#FEFEFF]">
+
+  <canvas id="ron-ambient-canvas" class="fixed inset-0 pointer-events-none z-0 opacity-70"></canvas>
+
+  <!-- Top Announcement Bar -->
+  <div class="ron-top-bar">
+    <div class="ron-container flex justify-between items-center text-[11px] uppercase tracking-widest text-[#B4B0BE]">
+      <div class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-[#5336CC] inline-block shadow-[0_0_8px_#5336CC] animate-pulse"></span>
+        <span>Customizer Lab v4.2 &middot; Editorial Model In-Hand Preview & Real-Time Shaders</span>
+      </div>
+      <div class="hidden sm:flex items-center gap-6">
+        <span>Hand-Crafted in 3-5 Working Days</span>
+        <span class="text-[#8B77A4]/40">|</span>
+        <span>Laser Monogram Guaranteed for Life</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Global Header Navigation -->
+  <header class="ron-nav-wrapper">
+    <div class="ron-container">
+      <nav class="ron-nav">
+        <a href="index.html" class="ron-logo group">
+          <div class="ron-logo-mark">R</div>
+          <span class="tracking-tight text-2xl font-black">RON</span>
+        </a>
+
+        <ul class="ron-nav-links">
+          <li><a href="index.html" class="ron-nav-link">Overview</a></li>
+          <li><a href="shop.html" class="ron-nav-link">Shop</a></li>
+          <li><a href="customizer.html" class="ron-nav-link active">On-Demand</a></li>
+          <li><a href="craft.html" class="ron-nav-link">The Craft</a></li>
+        </ul>
+
+        <div class="ron-nav-actions">
+          <select class="ron-currency-select" aria-label="Select Currency">
+            <option value="USD">USD ($)</option>
+            <option value="EUR">EUR (€)</option>
+            <option value="GBP">GBP (£)</option>
+            <option value="JPY">JPY (¥)</option>
+          </select>
+
+          <button id="ron-cart-toggle" class="ron-cart-btn" aria-label="Open Bag">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+              <line x1="3" y1="6" x2="21" y2="6"/>
+              <path d="M16 10a4 4 0 0 1-8 0"/>
+            </svg>
+            <span>Bag</span>
+            <span id="ron-cart-badge" class="ron-cart-badge">0</span>
+          </button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="py-12 lg:py-16 relative z-10">
+    <div class="ron-container">
+      
+      <!-- Breadcrumb Bar -->
+      <div class="flex items-center gap-2 text-xs font-mono text-[#8B77A4] mb-8 font-semibold">
+        <a href="index.html" class="hover:text-[#5336CC] transition">Home</a>
+        <span>/</span>
+        <a href="shop.html" class="hover:text-[#5336CC] transition">Hardware Atelier</a>
+        <span>/</span>
+        <span class="text-[#252425]">Bespoke 3D Customizer Engine</span>
+      </div>
+
+      <!-- Main Dual-Canvas Split -->
+      <div class="ron-customizer-split">
+        
+        <!-- LEFT COLUMN: Sticky Media Canvas & 3D Interactive Stage -->
+        <div class="ron-customizer-canvas-col">
+          
+          <!-- View & Lighting Switchers Header -->
+          <div class="w-full flex flex-wrap items-center justify-between gap-3 mb-4 z-10">
+            <!-- Studio vs Model In-Hand View Toggle -->
+            <div class="flex items-center p-1 bg-white border border-[#8B77A4]/25 rounded-xl shadow-sm text-xs font-mono">
+              <button id="view-mode-studio-btn" class="px-3 py-1 rounded-lg font-bold transition active bg-[#5336CC] text-white">3D Studio</button>
+              <button id="view-mode-model-btn" class="px-3 py-1 rounded-lg font-bold transition text-[#5A585B] hover:text-[#5336CC]">Model In-Hand</button>
+            </div>
+
+            <!-- Lighting Mode Switcher -->
+            <div class="flex items-center p-1 bg-white border border-[#8B77A4]/25 rounded-xl shadow-sm text-xs font-mono">
+              <button class="lighting-btn px-2.5 py-1 rounded-lg font-bold transition active bg-[#5336CC] text-white" data-mode="studio" title="Studio Daylight">Day</button>
+              <button class="lighting-btn px-2.5 py-1 rounded-lg font-bold transition text-[#5A585B] hover:text-[#5336CC]" data-mode="ultraviolet" title="Electric Ultraviolet Glow">UV Glow</button>
+              <button class="lighting-btn px-2.5 py-1 rounded-lg font-bold transition text-[#5A585B] hover:text-[#5336CC]" data-mode="sunset" title="Warm Sunset Amber">Sunset</button>
+            </div>
+          </div>
+
+          <!-- STAGE 1: Standard 3D Vector Stage with 360-Degree Spinner -->
+          <div id="interactive-case-stage" class="ron-customizer-stage">
+            <!-- Vector Phone Case Render Injected via RonCustomizerEngine -->
+          </div>
+
+          <!-- STAGE 2: Model In-Hand Editorial Stage (Hidden by default, toggled via View Mode) -->
+          <div id="model-in-hand-stage" class="hidden ron-model-hand-stage relative">
+            <img
+              src="https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?auto=format&fit=crop&w=1000&q=85"
+              alt="Real Human Hand Gripping Ron Custom Case in Palm"
+              class="w-full h-full object-cover"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex flex-col justify-end p-6 text-white pointer-events-none">
+              <span class="font-mono text-[10px] text-[#5336CC] font-bold uppercase tracking-widest">In-Hand Grip Simulation</span>
+              <p class="text-xs text-white/80">Ergonomically matched to natural hand palm radius.</p>
+            </div>
+            <!-- Docked Custom Case Clone -->
+            <div id="docked-case-clone" class="ron-hand-case-dock">
+              <!-- Cloned Vector Case with Live Customizations -->
+            </div>
+          </div>
+
+          <!-- 360-Degree Quick Angle Buttons (Only active in Studio Mode) -->
+          <div id="angle-controls-bar" class="flex items-center gap-2 mt-4 z-10 font-mono text-[11px]">
+            <span class="text-[#8B77A4] font-bold uppercase">Angle:</span>
+            <button class="angle-btn px-2.5 py-1 rounded-lg bg-white border border-[#8B77A4]/25 font-bold hover:border-[#5336CC] transition" data-angle="0">0° Back</button>
+            <button class="angle-btn px-2.5 py-1 rounded-lg bg-white border border-[#8B77A4]/25 font-bold hover:border-[#5336CC] transition" data-angle="35">35° 3/4</button>
+            <button class="angle-btn px-2.5 py-1 rounded-lg bg-white border border-[#8B77A4]/25 font-bold hover:border-[#5336CC] transition" data-angle="70">70° Side</button>
+          </div>
+
+          <!-- Live Specification Pills -->
+          <div class="mt-6 z-10 flex flex-wrap items-center justify-center gap-2.5 text-xs font-mono">
+            <span id="spec-pill-device" class="px-3 py-1 rounded-full bg-white border border-[#8B77A4]/30 text-[#252425] font-bold shadow-sm">iPhone 16 Pro Max</span>
+            <span id="spec-pill-finish" class="px-3 py-1 rounded-full bg-white border border-[#8B77A4]/30 text-[#252425] font-bold shadow-sm">3K CARBON FIBER</span>
+            <span id="spec-pill-magsafe" class="px-3 py-1 rounded-full bg-white border border-[#8B77A4]/30 text-[#252425] font-bold shadow-sm">MagSafe: Machined</span>
+            <span id="spec-pill-monogram" class="px-3 py-1 rounded-full bg-[#5336CC]/10 border border-[#5336CC]/30 text-[#5336CC] font-bold shadow-sm">"RON" &middot; GOLD</span>
+          </div>
+
+          <!-- Export 2K Snapshot Button -->
+          <button id="export-snapshot-btn" class="mt-6 flex items-center gap-2 text-xs font-mono font-bold text-[#5336CC] hover:text-[#252425] px-4 py-2 rounded-xl bg-white border border-[#8B77A4]/30 shadow-sm transition" title="Export 2K PNG Render">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            <span>Download High-Res Snapshot (2K)</span>
+          </button>
+        </div>
+
+        <!-- RIGHT COLUMN: Modular Customization Controls -->
+        <div class="flex flex-col">
+          
+          <!-- Pricing Header -->
+          <div class="mb-8 pb-6 border-b border-[#8B77A4]/25">
+            <div class="micro-label mb-2">BESPOKE HARDWARE RUN</div>
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <h1 id="custom-case-title" class="font-display text-3xl sm:text-4xl text-[#252425]">Ron Bespoke Atelier</h1>
+                <p class="text-sm text-[#5A585B] mt-1">Direct from the precision lab. Hand-inspected and laser-serialized.</p>
+              </div>
+              <div class="text-right flex-shrink-0">
+                <div id="live-price-display" class="font-mono text-3xl font-black text-[#5336CC]">$94.00</div>
+                <div class="text-[10px] font-mono text-[#8B77A4] uppercase font-bold">Express Courier Included</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- OPTION 1: Device Selection -->
+          <div class="ron-opt-section">
+            <div class="ron-opt-title">
+              <span>1. Select Device Architecture</span>
+              <span id="label-device-active" class="ron-opt-badge text-[#5336CC]">iPhone 16 Pro Max</span>
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+              <button class="opt-device-btn ron-seg-btn active" data-device="iPhone 16 Pro Max">iPhone 16 Pro Max</button>
+              <button class="opt-device-btn ron-seg-btn" data-device="iPhone 16 Pro">iPhone 16 Pro</button>
+              <button class="opt-device-btn ron-seg-btn" data-device="Galaxy S25 Ultra">Galaxy S25 Ultra</button>
+              <button class="opt-device-btn ron-seg-btn" data-device="Pixel 9 Pro">Google Pixel 9 Pro</button>
+            </div>
+          </div>
+
+          <!-- OPTION 2: Case Material & Finish -->
+          <div class="ron-opt-section">
+            <div class="ron-opt-title">
+              <span>2. Material Science Finish</span>
+              <span id="label-finish-active" class="ron-opt-badge text-[#5336CC]">3K Carbon Fiber</span>
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+              <button class="opt-finish-btn ron-seg-btn" data-finish="matte">
+                <div>Stealth Matte</div>
+                <div class="text-[10px] opacity-70">Base Config</div>
+              </button>
+              <button class="opt-finish-btn ron-seg-btn active" data-finish="carbon">
+                <div>3K Carbon Fiber</div>
+                <div class="text-[10px] text-[#FEFEFF] font-bold">+ $16.00</div>
+              </button>
+              <button class="opt-finish-btn ron-seg-btn" data-finish="leather">
+                <div>Italian Leather</div>
+                <div class="text-[10px] text-[#5336CC] font-bold">+ $24.00</div>
+              </button>
+              <button class="opt-finish-btn ron-seg-btn" data-finish="clear">
+                <div>Frosted Crystal</div>
+                <div class="text-[10px] text-[#5336CC] font-bold">+ $6.00</div>
+              </button>
+            </div>
+          </div>
+
+          <!-- OPTION 3: Colorway Swatches (Brand Palette) -->
+          <div class="ron-opt-section">
+            <div class="ron-opt-title">
+              <span>3. Colorway Palette</span>
+              <span id="label-color-active" class="ron-opt-badge text-[#5336CC]">Electric Ultraviolet</span>
+            </div>
+            <div class="ron-swatches-grid">
+              <button class="opt-color-btn ron-swatch-item active" data-color="#5336CC" data-name="Electric Ultraviolet" title="Electric Ultraviolet">
+                <div class="ron-swatch-fill bg-[#5336CC] shadow-[0_0_8px_#5336CC]"></div>
+              </button>
+              <button class="opt-color-btn ron-swatch-item" data-color="#252425" data-name="Onyx Charcoal" title="Onyx Charcoal">
+                <div class="ron-swatch-fill bg-[#252425]"></div>
+              </button>
+              <button class="opt-color-btn ron-swatch-item" data-color="#8B77A4" data-name="Lavender Slate" title="Lavender Slate">
+                <div class="ron-swatch-fill bg-[#8B77A4]"></div>
+              </button>
+              <button class="opt-color-btn ron-swatch-item" data-color="#3D4A41" data-name="Alpine Sage" title="Alpine Sage">
+                <div class="ron-swatch-fill bg-[#3D4A41]"></div>
+              </button>
+              <button class="opt-color-btn ron-swatch-item" data-color="#182A4D" data-name="Deep Cobalt" title="Deep Cobalt">
+                <div class="ron-swatch-fill bg-[#182A4D]"></div>
+              </button>
+              <button class="opt-color-btn ron-swatch-item" data-color="#8F8175" data-name="Desert Sand" title="Desert Sand">
+                <div class="ron-swatch-fill bg-[#8F8175]"></div>
+              </button>
+            </div>
+          </div>
+
+          <!-- OPTION 4: Photo / Custom Artwork Upload Drop-Zone -->
+          <div class="ron-opt-section">
+            <div class="ron-opt-title">
+              <span>4. Custom Artwork / Photo Overlay</span>
+              <span class="ron-opt-badge text-[#5336CC]">+ $12.00</span>
+            </div>
+            
+            <div id="artwork-dropzone" class="border-2 border-dashed border-[#8B77A4]/40 hover:border-[#5336CC] rounded-2xl p-6 text-center bg-white cursor-pointer transition shadow-sm">
+              <input type="file" id="artwork-file-input" accept="image/*" class="hidden" />
+              <div class="w-10 h-10 rounded-full bg-[#5336CC]/10 text-[#5336CC] flex items-center justify-center mx-auto mb-2">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              </div>
+              <p class="text-xs font-mono font-bold text-[#252425] mb-1">Click to Upload Artwork or Drag & Drop</p>
+              <p class="text-[10px] text-[#8B77A4]">PNG, JPG, or SVG up to 10MB &middot; UV Precision Printed</p>
+              <div id="artwork-preview-tag" class="hidden mt-3 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#5336CC]/10 text-[#5336CC] text-xs font-mono font-bold">
+                <span>Artwork Loaded</span>
+                <button id="clear-artwork-btn" class="hover:text-red-500 font-bold">&times;</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- OPTION 5: Monogram Engraving -->
+          <div class="ron-opt-section">
+            <div class="ron-opt-title">
+              <span>5. Bespoke Monogram Engraving</span>
+              <span class="ron-opt-badge text-[#5336CC]">+ $10.00</span>
+            </div>
+
+            <div class="mb-4">
+              <input
+                id="input-monogram-text"
+                type="text"
+                maxlength="8"
+                value="RON"
+                placeholder="YOUR INITIALS (UP TO 8 CHARACTERS)"
+                class="ron-input"
+              />
+              <div class="flex justify-between items-center text-[11px] font-mono text-[#8B77A4] mt-2 px-1 font-semibold">
+                <span>Laser engraved into chassis matrix</span>
+                <span id="monogram-char-count">3 / 8 chars</span>
+              </div>
+            </div>
+
+            <!-- Monogram Font -->
+            <div class="mb-4">
+              <div class="text-xs font-mono uppercase tracking-wider text-[#5A585B] mb-2 font-bold">Typography Font Pair</div>
+              <div class="grid grid-cols-3 gap-2">
+                <button class="opt-font-btn ron-seg-btn active" data-font="Space Grotesk"><span class="font-heading font-bold">Sans</span></button>
+                <button class="opt-font-btn ron-seg-btn" data-font="JetBrains Mono"><span class="font-mono">Mono</span></button>
+                <button class="opt-font-btn ron-seg-btn" data-font="Cinzel"><span class="font-serif">Serif</span></button>
+              </div>
+            </div>
+
+            <!-- Monogram Foil Finish -->
+            <div class="mb-4">
+              <div class="text-xs font-mono uppercase tracking-wider text-[#5A585B] mb-2 font-bold">Foil / Glow Stamping</div>
+              <div class="grid grid-cols-4 gap-2">
+                <button class="opt-foil-btn ron-seg-btn" data-foil="deboss">Deboss</button>
+                <button class="opt-foil-btn ron-seg-btn" data-foil="silver">Silver</button>
+                <button class="opt-foil-btn ron-seg-btn active" data-foil="gold">24K Gold</button>
+                <button class="opt-foil-btn ron-seg-btn" data-foil="ultraviolet">UV Glow</button>
+              </div>
+            </div>
+
+            <!-- Monogram Placement -->
+            <div>
+              <div class="text-xs font-mono uppercase tracking-wider text-[#5A585B] mb-2 font-bold">Placement Geometry</div>
+              <div class="grid grid-cols-3 gap-2">
+                <button class="opt-pos-btn ron-seg-btn active" data-pos="bottom-center">Lower Center</button>
+                <button class="opt-pos-btn ron-seg-btn" data-pos="bottom-right">Bottom Right</button>
+                <button class="opt-pos-btn ron-seg-btn" data-pos="vertical-spine">Spine Edge</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- OPTION 6: MagSafe Architecture -->
+          <div class="ron-opt-section">
+            <div class="ron-opt-title">
+              <span>6. MagSafe Magnetic Array</span>
+              <span id="label-magsafe-active" class="ron-opt-badge text-[#5336CC]">Machined Titanium</span>
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+              <button class="opt-magsafe-btn ron-seg-btn active" data-magsafe="machined">Machined Titanium</button>
+              <button class="opt-magsafe-btn ron-seg-btn" data-magsafe="stealth">Concealed Stealth</button>
+              <button class="opt-magsafe-btn ron-seg-btn" data-magsafe="coils">Exposed Copper Coils</button>
+              <button class="opt-magsafe-btn ron-seg-btn" data-magsafe="glyph">Ron Monogram Emblem</button>
+            </div>
+          </div>
+
+          <!-- OPTION 7: Camera Ring Accent -->
+          <div class="ron-opt-section">
+            <div class="ron-opt-title">
+              <span>7. Anodized CNC Camera Ring</span>
+              <span id="label-cameraring-active" class="ron-opt-badge text-[#5336CC]">Electric Ultraviolet</span>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <button class="opt-ring-btn ron-seg-btn active px-4" data-ring="ultraviolet">Electric Ultraviolet</button>
+              <button class="opt-ring-btn ron-seg-btn px-4" data-ring="titanium">Titanium Silver</button>
+              <button class="opt-ring-btn ron-seg-btn px-4" data-ring="midnight">Onyx Charcoal</button>
+              <button class="opt-ring-btn ron-seg-btn px-4" data-ring="crimson">Crimson Accent (+ $8)</button>
+              <button class="opt-ring-btn ron-seg-btn px-4" data-ring="gold">24K Gold (+ $8)</button>
+            </div>
+          </div>
+
+          <!-- Live Engineering Specs Accordion -->
+          <div class="ron-opt-section">
+            <div class="ron-opt-title">
+              <span>Hardware Specification Accordion</span>
+              <span class="ron-opt-badge text-[#8B77A4]">Verified 100%</span>
+            </div>
+            <div class="space-y-3 font-mono text-xs">
+              <details class="bg-white border border-[#8B77A4]/25 rounded-xl p-4 cursor-pointer">
+                <summary class="font-bold text-[#252425] flex justify-between items-center">
+                  <span>Drop-Test Impact Dissipation</span>
+                  <span class="text-[#5336CC]">&darr;</span>
+                </summary>
+                <p class="text-[#5A585B] mt-2 font-normal leading-relaxed">
+                  Rated for 16ft / 4.8m Mil-Spec 810H kinetic impacts. Dual-density internal perimeter shock ribs isolate the chassis from shockwave transmission.
+                </p>
+              </details>
+
+              <details class="bg-white border border-[#8B77A4]/25 rounded-xl p-4 cursor-pointer">
+                <summary class="font-bold text-[#252425] flex justify-between items-center">
+                  <span>Wireless Charging Speed & Qi2 Compatibility</span>
+                  <span class="text-[#5336CC]">&darr;</span>
+                </summary>
+                <p class="text-[#5A585B] mt-2 font-normal leading-relaxed">
+                  Full 15W Qi2 fast charging pass-through. Magnetic array features 36 calibrated N52 neodymium arc magnets for firm automotive mount locking.
+                </p>
+              </details>
+            </div>
+          </div>
+
+          <!-- Sticky Add to Bag Drawer Bar -->
+          <div class="sticky bottom-6 z-30 bg-white/95 backdrop-blur-xl border border-[#8B77A4]/30 p-6 rounded-2xl shadow-2xl mt-4">
+            <div class="flex items-center justify-between mb-4">
+              <div>
+                <span class="text-xs font-mono text-[#8B77A4] uppercase font-bold">Total Bespoke Value</span>
+                <div id="sticky-total-price" class="font-mono text-2xl font-black text-[#5336CC]">$94.00</div>
+              </div>
+              <div class="text-right text-[11px] font-mono text-[#5A585B]">
+                <span class="font-bold">Free Express Delivery</span><br>
+                <span class="text-[#5336CC] font-bold">Dispatches in 72 hours</span>
+              </div>
+            </div>
+
+            <button id="add-custom-case-btn" class="ron-btn ron-btn-primary w-full justify-center text-base py-4 shadow-xl group">
+              <span>Add Custom Configuration to Bag</span>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="transition-transform group-hover:translate-x-1">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Global Slide-Out Cart Drawer -->
+  <div id="ron-cart-overlay" class="ron-cart-drawer-overlay">
+    <div class="ron-cart-drawer">
+      <div class="ron-cart-header">
+        <div class="flex items-center gap-3">
+          <h3 class="font-heading text-lg font-bold text-[#252425]">Your Shopping Bag</h3>
+          <span class="text-xs font-mono text-[#5336CC] font-bold uppercase tracking-wider">RON ATELIER</span>
+        </div>
+        <button id="ron-cart-close" class="ron-cart-close" aria-label="Close Bag">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <div class="px-7 pt-4 bg-[#F8F7FB]">
+        <div id="ron-free-shipping-msg" class="text-xs font-mono text-[#5A585B]"></div>
+        <div class="ron-progress-track">
+          <div id="ron-free-shipping-bar" class="ron-progress-bar" style="width: 0%"></div>
+        </div>
+      </div>
+
+      <div id="ron-cart-items-list" class="ron-cart-items"></div>
+
+      <div class="ron-cart-footer">
+        <div class="flex gap-2 mb-4">
+          <input id="ron-promo-input" type="text" placeholder="PROMO CODE (e.g. RON15)" class="flex-1 bg-white border border-[#8B77A4]/25 rounded-xl px-4 py-2 text-xs font-mono text-[#252425] placeholder-[#8B77A4] uppercase outline-none focus:border-[#5336CC]" />
+          <button id="ron-promo-apply" class="ron-btn ron-btn-secondary ron-btn-sm px-4">Apply</button>
+        </div>
+
+        <div class="space-y-2 mb-5 font-mono text-xs">
+          <div class="flex justify-between text-[#5A585B]">
+            <span>Subtotal</span>
+            <span id="ron-cart-subtotal" class="text-[#252425] font-bold">$0.00</span>
+          </div>
+          <div id="ron-cart-discount-row" class="flex justify-between text-[#5336CC]" style="display: none;">
+            <span>Privilege Discount</span>
+            <span id="ron-cart-discount">-$0.00</span>
+          </div>
+          <div class="flex justify-between text-[#5A585B]">
+            <span>Express Courier</span>
+            <span id="ron-cart-shipping" class="text-[#252425] font-bold">$12.00</span>
+          </div>
+          <div class="flex justify-between text-base pt-3 border-t border-[#8B77A4]/20 text-[#252425] font-black">
+            <span>Total</span>
+            <span id="ron-cart-total" class="text-[#5336CC]">$0.00</span>
+          </div>
+        </div>
+
+        <a href="checkout.html" class="ron-btn ron-btn-primary w-full justify-center shadow-xl">
+          <span>Proceed to Secure Checkout</span>
+          <span class="font-mono text-xs">&rarr;</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Global Footer -->
+  <footer class="ron-footer">
+    <div class="ron-container">
+      <div class="ron-footer-grid">
+        <div class="space-y-6">
+          <a href="index.html" class="ron-logo text-[#FEFEFF]">
+            <div class="ron-logo-mark">R</div>
+            <span class="tracking-tight text-white font-black">RON</span>
+          </a>
+          <p class="text-sm text-[#B4B0BE] max-w-sm leading-relaxed font-light">
+            Ron is a high-precision design atelier engineering bespoke custom phone cases for the world's most discerning tech lifestyle enthusiasts.
+          </p>
+          <form id="ron-newsletter-form" class="space-y-3">
+            <div class="text-xs font-mono uppercase tracking-wider text-[#FEFEFF] font-bold">Studio Roster & Drop Registry</div>
+            <div class="flex gap-2">
+              <input type="email" placeholder="architect@domain.com" required class="bg-white/10 border border-white/20 rounded-xl px-4 py-2.5 text-xs text-white placeholder-white/40 font-mono outline-none focus:border-[#5336CC] flex-1" />
+              <button type="submit" class="ron-btn ron-btn-primary ron-btn-sm px-5">Join</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="ron-footer-col">
+          <h4>Navigation</h4>
+          <ul class="ron-footer-links">
+            <li><a href="index.html">Overview</a></li>
+            <li><a href="shop.html">Shop Catalog</a></li>
+            <li><a href="customizer.html">Interactive Customizer</a></li>
+            <li><a href="craft.html">The Craft & Materials</a></li>
+            <li><a href="checkout.html">Checkout Bag</a></li>
+          </ul>
+        </div>
+
+        <div class="ron-footer-col">
+          <h4>Collections</h4>
+          <ul class="ron-footer-links">
+            <li><a href="shop.html?category=stealth">Ron Stealth (Carbon)</a></li>
+            <li><a href="shop.html?category=minimal">Ron Minimal (Leather)</a></li>
+            <li><a href="shop.html?category=armor">Ron Kinetic Armor</a></li>
+            <li><a href="shop.html?finish=clear">Frosted Crystal Series</a></li>
+            <li><a href="customizer.html">Monogram Engraving</a></li>
+          </ul>
+        </div>
+
+        <div class="ron-footer-col">
+          <h4>Engineering</h4>
+          <ul class="ron-footer-links">
+            <li><a href="craft.html#mil-spec">16ft Mil-Spec Drop Lab</a></li>
+            <li><a href="craft.html#tolerances">0.12mm CNC Tolerances</a></li>
+            <li><a href="craft.html#sustainability">Recycled Composites</a></li>
+            <li><a href="#">15-Year Guarantee</a></li>
+            <li><a href="#">Global Courier Tracking</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="py-4 border-t border-white/10 flex flex-wrap justify-between items-center text-xs font-mono text-[#8B8796]">
+        <div id="ron-live-clock">LAB TIME: 00:00:00 UTC &middot; TOKYO / SF / LONDON</div>
+        <div class="flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-[#5336CC] animate-ping"></span>
+          <span>SYSTEM STATUS: OPERATIONAL</span>
+        </div>
+      </div>
+
+      <div class="ron-footer-bottom">
+        <div>&copy; 2026 RON PRECISION HARDWARE LABS INC. ALL RIGHTS RESERVED.</div>
+        <div class="flex items-center gap-6">
+          <a href="#" class="hover:text-white transition">Privacy Architecture</a>
+          <a href="#" class="hover:text-white transition">Terms of Service</a>
+          <a href="#" class="hover:text-white transition">Certificate Registry</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Customizer Wiring Script -->
+  <script type="module">
+    import { CATALOG, cart, showToast, sounds } from './js/store.js';
+    import { initGlobalUI } from './js/app.js';
+    import { RonCustomizerEngine } from './js/customizer-engine.js';
+    import { Case360Spinner, initMotion } from './js/motion.js';
+
+    initGlobalUI();
+    initMotion();
+
+    const stageEl = document.getElementById('interactive-case-stage');
+    const modelStageEl = document.getElementById('model-in-hand-stage');
+    const dockedCloneEl = document.getElementById('docked-case-clone');
+    const angleBar = document.getElementById('angle-controls-bar');
+    const livePriceEl = document.getElementById('live-price-display');
+    const stickyPriceEl = document.getElementById('sticky-total-price');
+
+    const viewStudioBtn = document.getElementById('view-mode-studio-btn');
+    const viewModelBtn = document.getElementById('view-mode-model-btn');
+
+    const specPillDevice = document.getElementById('spec-pill-device');
+    const specPillFinish = document.getElementById('spec-pill-finish');
+    const specPillMagsafe = document.getElementById('spec-pill-magsafe');
+    const specPillMonogram = document.getElementById('spec-pill-monogram');
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const preId = urlParams.get('id');
+    const preProduct = CATALOG.find(p => p.id === preId);
+    const preMonogram = urlParams.get('monogram');
+    const templateParam = urlParams.get('template') || urlParams.get('style');
+
+    let initFinish = preProduct ? preProduct.finish : 'carbon';
+    let initColor = preProduct ? preProduct.colors[0] : '#5336CC';
+    let initColorName = preProduct ? preProduct.colorNames[0] : 'Electric Ultraviolet';
+    let initMonogram = preMonogram || 'RON';
+    let initFoil = 'gold';
+
+    if (templateParam === 'good-vibes-only') {
+      initFinish = 'matte';
+      initColor = '#1A191B';
+      initColorName = 'Matte Black';
+      initMonogram = 'GOOD VIBES';
+      initFoil = 'silver';
+    } else if (templateParam === 'topography-gold') {
+      initFinish = 'matte';
+      initColor = '#201F22';
+      initColorName = 'Topography Black';
+      initMonogram = '3840M';
+      initFoil = 'gold';
+    } else if (templateParam === 'alpine' || templateParam === 'alpine-monochrome') {
+      initFinish = 'matte';
+      initColor = '#1A191B';
+      initColorName = 'Alpine Slate';
+      initMonogram = 'SUMMIT';
+      initFoil = 'silver';
+    } else if (templateParam === 'white-marble') {
+      initFinish = 'matte';
+      initColor = '#FEFEFF';
+      initColorName = 'Carrara Marble';
+      initMonogram = 'RON';
+      initFoil = 'gold';
+    }
+
+    const currentConfig = {
+      device: preProduct ? preProduct.defaultDevice : 'iPhone 16 Pro Max',
+      finish: initFinish,
+      color: initColor,
+      colorName: initColorName,
+      monogramText: initMonogram,
+      monogramFont: 'Space Grotesk',
+      monogramFoil: initFoil,
+      monogramPosition: 'bottom-center',
+      magsafeStyle: 'machined',
+      cameraRing: 'ultraviolet',
+      lightingMode: 'studio',
+      rotationAngle: 0,
+      uploadedImageURL: null
+    };
+
+    let calculatedUSD = 94;
+
+    const engine = new RonCustomizerEngine(stageEl, {
+      ...currentConfig,
+      onPriceChange: (usd) => {
+        calculatedUSD = usd;
+        if (livePriceEl) livePriceEl.textContent = cart.formatPrice(usd);
+        if (stickyPriceEl) stickyPriceEl.textContent = cart.formatPrice(usd);
+        syncModelHandClone();
+      }
+    });
+
+    // Sync docked clone into model's hand
+    function syncModelHandClone() {
+      if (dockedCloneEl && stageEl) {
+        dockedCloneEl.innerHTML = stageEl.innerHTML;
+      }
+    }
+
+    // Toggle Studio vs Model In-Hand View
+    viewStudioBtn?.addEventListener('click', () => {
+      sounds.click('soft');
+      viewStudioBtn.classList.add('bg-[#5336CC]', 'text-white');
+      viewStudioBtn.classList.remove('text-[#5A585B]');
+      viewModelBtn.classList.remove('bg-[#5336CC]', 'text-white');
+      viewModelBtn.classList.add('text-[#5A585B]');
+      stageEl.classList.remove('hidden');
+      modelStageEl.classList.add('hidden');
+      angleBar?.classList.remove('hidden');
+    });
+
+    viewModelBtn?.addEventListener('click', () => {
+      sounds.click('soft');
+      viewModelBtn.classList.add('bg-[#5336CC]', 'text-white');
+      viewModelBtn.classList.remove('text-[#5A585B]');
+      viewStudioBtn.classList.remove('bg-[#5336CC]', 'text-white');
+      viewStudioBtn.classList.add('text-[#5A585B]');
+      stageEl.classList.add('hidden');
+      modelStageEl.classList.remove('hidden');
+      angleBar?.classList.add('hidden');
+      syncModelHandClone();
+    });
+
+    // 360-Degree Spinner Setup
+    const spinner = new Case360Spinner(stageEl, {
+      onRotate: (deg) => {
+        engine.update({ rotationAngle: deg });
+        syncModelHandClone();
+      }
+    });
+
+    document.querySelectorAll('.angle-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        sounds.click('soft');
+        const deg = parseFloat(btn.getAttribute('data-angle'));
+        spinner.setAngle(deg);
+      });
+    });
+
+    // Lighting mode buttons
+    document.querySelectorAll('.lighting-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        sounds.click('soft');
+        document.querySelectorAll('.lighting-btn').forEach(b => {
+          b.classList.remove('bg-[#5336CC]', 'text-white');
+          b.classList.add('text-[#5A585B]');
+        });
+        btn.classList.add('bg-[#5336CC]', 'text-white');
+        btn.classList.remove('text-[#5A585B]');
+        const mode = btn.getAttribute('data-mode');
+        currentConfig.lightingMode = mode;
+        engine.update({ lightingMode: mode });
+        syncModelHandClone();
+      });
+    });
+
+    function updatePills() {
+      if (specPillDevice) specPillDevice.textContent = currentConfig.device;
+      if (specPillFinish) specPillFinish.textContent = currentConfig.finish.toUpperCase();
+      if (specPillMagsafe) specPillMagsafe.textContent = `MagSafe: ${currentConfig.magsafeStyle}`;
+      if (specPillMonogram) {
+        if (currentConfig.monogramText) {
+          specPillMonogram.style.display = 'inline-block';
+          specPillMonogram.textContent = `"${currentConfig.monogramText}" &middot; ${currentConfig.monogramFoil.toUpperCase()}`;
+        } else {
+          specPillMonogram.style.display = 'none';
+        }
+      }
+    }
+
+    // Device selector
+    document.querySelectorAll('.opt-device-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        sounds.click('soft');
+        document.querySelectorAll('.opt-device-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentConfig.device = btn.getAttribute('data-device');
+        document.getElementById('label-device-active').textContent = currentConfig.device;
+        engine.update({ device: currentConfig.device });
+        updatePills();
+        syncModelHandClone();
+      });
+    });
+
+    // Finish selector
+    document.querySelectorAll('.opt-finish-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        sounds.click('soft');
+        document.querySelectorAll('.opt-finish-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentConfig.finish = btn.getAttribute('data-finish');
+        document.getElementById('label-finish-active').textContent = btn.querySelector('div').textContent;
+        engine.update({ finish: currentConfig.finish });
+        updatePills();
+        syncModelHandClone();
+      });
+    });
+
+    // Color Swatches
+    document.querySelectorAll('.opt-color-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        sounds.click('soft');
+        document.querySelectorAll('.opt-color-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentConfig.color = btn.getAttribute('data-color');
+        currentConfig.colorName = btn.getAttribute('data-name');
+        document.getElementById('label-color-active').textContent = currentConfig.colorName;
+        engine.update({ color: currentConfig.color, colorName: currentConfig.colorName });
+        updatePills();
+        syncModelHandClone();
+      });
+    });
+
+    // Custom Artwork Photo Dropzone
+    const dropzone = document.getElementById('artwork-dropzone');
+    const fileInput = document.getElementById('artwork-file-input');
+    const previewTag = document.getElementById('artwork-preview-tag');
+    const clearArtBtn = document.getElementById('clear-artwork-btn');
+
+    dropzone?.addEventListener('click', () => fileInput?.click());
+    fileInput?.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (re) => {
+          sounds.click('metallic');
+          currentConfig.uploadedImageURL = re.target.result;
+          engine.update({ uploadedImageURL: currentConfig.uploadedImageURL });
+          previewTag.classList.remove('hidden');
+          showToast('Custom Artwork Uploaded to Case Matrix (+ $12)', 'success');
+          syncModelHandClone();
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    clearArtBtn?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      currentConfig.uploadedImageURL = null;
+      engine.update({ uploadedImageURL: null });
+      previewTag.classList.add('hidden');
+      if (fileInput) fileInput.value = '';
+      syncModelHandClone();
+    });
+
+    // Monogram Input
+    const monoInput = document.getElementById('input-monogram-text');
+    const monoCharCount = document.getElementById('monogram-char-count');
+    if (monoInput) {
+      if (preMonogram) monoInput.value = preMonogram;
+      monoInput.addEventListener('input', (e) => {
+        const val = e.target.value.toUpperCase();
+        currentConfig.monogramText = val;
+        if (monoCharCount) monoCharCount.textContent = `${val.length} / 8 chars`;
+        engine.update({ monogramText: val });
+        updatePills();
+        syncModelHandClone();
+      });
+    }
+
+    // Monogram Font
+    document.querySelectorAll('.opt-font-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        sounds.click('soft');
+        document.querySelectorAll('.opt-font-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentConfig.monogramFont = btn.getAttribute('data-font');
+        engine.update({ monogramFont: currentConfig.monogramFont });
+        syncModelHandClone();
+      });
+    });
+
+    // Monogram Foil
+    document.querySelectorAll('.opt-foil-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        sounds.click('soft');
+        document.querySelectorAll('.opt-foil-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentConfig.monogramFoil = btn.getAttribute('data-foil');
+        engine.update({ monogramFoil: currentConfig.monogramFoil });
+        updatePills();
+        syncModelHandClone();
+      });
+    });
+
+    // Monogram Position
+    document.querySelectorAll('.opt-pos-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        sounds.click('soft');
+        document.querySelectorAll('.opt-pos-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentConfig.monogramPosition = btn.getAttribute('data-pos');
+        engine.update({ monogramPosition: currentConfig.monogramPosition });
+        syncModelHandClone();
+      });
+    });
+
+    // MagSafe
+    document.querySelectorAll('.opt-magsafe-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        sounds.click('soft');
+        document.querySelectorAll('.opt-magsafe-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentConfig.magsafeStyle = btn.getAttribute('data-magsafe');
+        document.getElementById('label-magsafe-active').textContent = btn.textContent.trim();
+        engine.update({ magsafeStyle: currentConfig.magsafeStyle });
+        updatePills();
+        syncModelHandClone();
+      });
+    });
+
+    // Camera Ring
+    document.querySelectorAll('.opt-ring-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        sounds.click('soft');
+        document.querySelectorAll('.opt-ring-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentConfig.cameraRing = btn.getAttribute('data-ring');
+        document.getElementById('label-cameraring-active').textContent = btn.textContent.trim();
+        engine.update({ cameraRing: currentConfig.cameraRing });
+        syncModelHandClone();
+      });
+    });
+
+    // Snapshot button
+    document.getElementById('export-snapshot-btn')?.addEventListener('click', () => {
+      engine.exportSnapshot();
+      showToast('Exported 2K Ultra High-Resolution Snapshot', 'success');
+    });
+
+    // Add to bag
+    document.getElementById('add-custom-case-btn')?.addEventListener('click', () => {
+      cart.addItem({
+        id: 'ron-bespoke-custom',
+        name: `Ron Bespoke ${currentConfig.finish.toUpperCase()} Atelier`,
+        priceUSD: calculatedUSD,
+        device: currentConfig.device,
+        finish: currentConfig.finish,
+        colorName: currentConfig.colorName,
+        monogramText: currentConfig.monogramText,
+        monogramFont: currentConfig.monogramFont,
+        monogramFoil: currentConfig.monogramFoil,
+        magsafeStyle: currentConfig.magsafeStyle,
+        cameraRing: currentConfig.cameraRing,
+        uploadedImageURL: currentConfig.uploadedImageURL,
+        studioImg: 'https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?auto=format&fit=crop&w=400&q=80'
+      });
+
+      showToast('Custom Atelier Case Added to Bag', 'success', 'View Bag', () => {
+        document.getElementById('ron-cart-toggle')?.click();
+      });
+
+      document.getElementById('ron-cart-toggle')?.click();
+    });
+
+    updatePills();
+    syncModelHandClone();
+  </script>
+</body>
+</html>

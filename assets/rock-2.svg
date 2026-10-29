@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 140" width="130" height="140">
+  <defs>
+    <filter id="rock-shadow-rock2" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="16" stdDeviation="18" flood-color="#000000" flood-opacity="0.45" />
+    </filter>
+  </defs>
+  <g filter="url(#rock-shadow-rock2)">
+    <polygon points="60,15 110,45 80,85 30,50" fill="#4E4D52" stroke="rgba(255,255,255,0.08)" stroke-width="0.8" />
+    <polygon points="110,45 125,95 85,125 80,85" fill="#3A393E" stroke="rgba(255,255,255,0.08)" stroke-width="0.8" />
+    <polygon points="30,50 80,85 55,125 15,85" fill="#252427" stroke="rgba(255,255,255,0.08)" stroke-width="0.8" />
+    <polygon points="80,85 85,125 55,125" fill="#1C1B1E" stroke="rgba(255,255,255,0.08)" stroke-width="0.8" />
+  </g>
+</svg>

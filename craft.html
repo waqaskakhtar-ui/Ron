@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Craft & Philosophy &mdash; RON Hardware Engineering Lab</title>
+  <meta name="description" content="Explore the material science, 16ft ballistic drop testing, vertical engineering timeline, and 0.12mm CNC tolerances behind every Ron phone case.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- GSAP 3 & ScrollTrigger for Awwwards-Level Fluid Motion -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%235336CC'/><text y='.75em' x='50%' text-anchor='middle' font-family='sans-serif' font-weight='900' font-size='60' fill='%23FEFEFF'>R</text></svg>">
+</head>
+<body class="bg-[#FEFEFF] text-[#252425] selection:bg-[#5336CC] selection:text-[#FEFEFF]">
+
+  <canvas id="ron-ambient-canvas" class="fixed inset-0 pointer-events-none z-0 opacity-70"></canvas>
+
+  <!-- Top Announcement Bar -->
+  <div class="ron-top-bar">
+    <div class="ron-container flex justify-between items-center text-[11px] uppercase tracking-widest text-[#B4B0BE]">
+      <div class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-[#5336CC] inline-block shadow-[0_0_8px_#5336CC] animate-pulse"></span>
+        <span>Laboratory Spec 4.0 &middot; ISO 9001 Certified Material Testing</span>
+      </div>
+      <div class="hidden sm:flex items-center gap-6">
+        <span>100% Circular Aerospace Composites</span>
+        <span class="text-[#8B77A4]/40">|</span>
+        <span>Zero Synthetic Fragrance or Harsh Glues</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Global Header Navigation -->
+  <header class="ron-nav-wrapper">
+    <div class="ron-container">
+      <nav class="ron-nav">
+        <a href="index.html" class="ron-logo group">
+          <div class="ron-logo-mark">R</div>
+          <span class="tracking-tight text-2xl font-black">RON</span>
+        </a>
+
+        <ul class="ron-nav-links">
+          <li><a href="index.html" class="ron-nav-link">Overview</a></li>
+          <li><a href="shop.html" class="ron-nav-link">Shop</a></li>
+          <li><a href="customizer.html" class="ron-nav-link">On-Demand</a></li>
+          <li><a href="craft.html" class="ron-nav-link active">The Craft</a></li>
+        </ul>
+
+        <div class="ron-nav-actions">
+          <select class="ron-currency-select" aria-label="Select Currency">
+            <option value="USD">USD ($)</option>
+            <option value="EUR">EUR (€)</option>
+            <option value="GBP">GBP (£)</option>
+            <option value="JPY">JPY (¥)</option>
+          </select>
+
+          <button id="ron-cart-toggle" class="ron-cart-btn" aria-label="Open Bag">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+              <line x1="3" y1="6" x2="21" y2="6"/>
+              <path d="M16 10a4 4 0 0 1-8 0"/>
+            </svg>
+            <span>Bag</span>
+            <span id="ron-cart-badge" class="ron-cart-badge">0</span>
+          </button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="relative z-10">
+    <!-- Hero Section -->
+    <section class="pt-20 pb-16 border-b border-[#8B77A4]/20 bg-[#F6F5F9]/60">
+      <div class="ron-container">
+        <div class="max-w-3xl">
+          <div class="micro-label mb-4">FOUNDATIONAL ARCHITECTURE</div>
+          <h1 class="font-display text-5xl sm:text-7xl text-[#252425] mb-6 text-split-reveal">
+            Obsessive Precision.<br>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#5336CC] via-[#8B77A4] to-[#252425]">Zero Superfluous Mass.</span>
+          </h1>
+          <p class="text-lg sm:text-xl text-[#5A585B] font-body font-light leading-relaxed">
+            Most phone cases are designed as disposable plastic shells. Ron designs cases as permanent hardware armor &mdash; engineered with the same composite carbon weaves and structural tolerances found in supersonic aviation.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 1: Material Science Breakdown -->
+    <section class="ron-section ron-section-lg border-b border-[#8B77A4]/20">
+      <div class="ron-container">
+        
+        <!-- Carbon Weave 60/40 -->
+        <div class="ron-grid-60-40 items-center mb-24">
+          <div class="relative aspect-[4/3] rounded-3xl overflow-hidden border border-[#8B77A4]/30 shadow-xl group">
+            <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1200&q=85" alt="Master artisan hands inspecting aerospace carbon composite" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+            <div class="absolute inset-0 bg-gradient-to-t from-[#252425]/90 via-transparent to-transparent flex flex-col justify-end p-8">
+              <span class="font-mono text-xs text-[#5336CC] uppercase tracking-widest font-bold">Toray Industries &middot; Japan</span>
+              <h4 class="font-heading text-2xl text-white">Genuine 3K Twill Carbon Matrix</h4>
+            </div>
+          </div>
+
+          <div>
+            <div class="micro-label mb-3">MATERIAL 01 &middot; CARBON COMPOSITE</div>
+            <h2 class="font-heading text-3xl sm:text-4xl text-[#252425] mb-6">Woven at 3,000 filaments per tow.</h2>
+            <p class="text-[#5A585B] leading-relaxed mb-6 font-light">
+              We source raw Toray carbon fiber tows and weave them into a balanced 2x2 twill pattern. Impregnated with a toughened aerospace epoxy resin under 8 bars of autoclave pressure, the resulting backplate achieves 5x the tensile strength of surgical steel at 25% the density.
+            </p>
+            <div class="space-y-3 font-mono text-xs border-t border-[#8B77A4]/20 pt-4">
+              <div class="flex justify-between py-1 border-b border-[#8B77A4]/10">
+                <span class="text-[#8B77A4]">TENSILE STRENGTH</span>
+                <span class="text-[#252425] font-bold">4,900 MPa</span>
+              </div>
+              <div class="flex justify-between py-1 border-b border-[#8B77A4]/10">
+                <span class="text-[#8B77A4]">WEIGHT DENSITY</span>
+                <span class="text-[#252425] font-bold">1.55 g/cm³</span>
+              </div>
+              <div class="flex justify-between py-1">
+                <span class="text-[#8B77A4]">THERMAL DISSIPATION</span>
+                <span class="text-[#5336CC] font-bold">120 W/m&middot;K</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Italian Leather Inverted 40/60 -->
+        <div class="ron-grid-40-60 items-center">
+          <div>
+            <div class="micro-label mb-3">MATERIAL 02 &middot; TUSCAN VEGETABLE LEATHER</div>
+            <h2 class="font-heading text-3xl sm:text-4xl text-[#252425] mb-6">Tanned with chestnut barks in Florence.</h2>
+            <p class="text-[#5A585B] leading-relaxed mb-6 font-light">
+              No artificial polyurethane coatings. We hand-select full-grain cowhides from Santa Croce sull'Arno. Tanned over 40 days using organic oak and mimosa tannins, the leather breathes, resists abrasion, and patinas into a unique amber-darkened artifact tailored to your touch.
+            </p>
+            <div class="space-y-3 font-mono text-xs border-t border-[#8B77A4]/20 pt-4">
+              <div class="flex justify-between py-1 border-b border-[#8B77A4]/10">
+                <span class="text-[#8B77A4]">TANNING PROCESS</span>
+                <span class="text-[#252425] font-bold">100% Organic Vegetable Tanned</span>
+              </div>
+              <div class="flex justify-between py-1 border-b border-[#8B77A4]/10">
+                <span class="text-[#8B77A4]">EDGE FINISH</span>
+                <span class="text-[#252425] font-bold">Hand-Burnished & Skived 0.4mm</span>
+              </div>
+              <div class="flex justify-between py-1">
+                <span class="text-[#8B77A4]">PATINA LIFECYCLE</span>
+                <span class="text-[#5336CC] font-bold">Deepens over 180+ Days</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="relative aspect-[4/3] rounded-3xl overflow-hidden border border-[#8B77A4]/30 shadow-xl group">
+            <img src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?auto=format&fit=crop&w=1200&q=85" alt="Master Florentine artisan hands skiving and stitching Tuscan leather" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+            <div class="absolute inset-0 bg-gradient-to-t from-[#252425]/90 via-transparent to-transparent flex flex-col justify-end p-8">
+              <span class="font-mono text-xs text-[#8B77A4] uppercase tracking-widest font-bold">Tuscany &middot; Italy</span>
+              <h4 class="font-heading text-2xl text-white">Full-Grain Living Leather</h4>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 2: Interactive Vertical Timeline of Engineering -->
+    <section class="ron-section ron-section-lg border-b border-[#8B77A4]/20 bg-[#F6F5F9]/50">
+      <div class="ron-container">
+        
+        <div class="text-center max-w-2xl mx-auto mb-16">
+          <div class="micro-label mb-3">CHRONICLE OF PRECISION</div>
+          <h2 class="font-heading text-4xl sm:text-5xl text-[#252425] mb-4 text-split-reveal">
+            The 6-Phase Engineering Pipeline.
+          </h2>
+          <p class="text-[#5A585B] text-base font-light">
+            From raw composite tow extrusion to micron-level laser engraving, each case takes 72 hours of meticulous processing.
+          </p>
+        </div>
+
+        <!-- Vertical Timeline Track -->
+        <div class="relative max-w-3xl mx-auto space-y-12 before:absolute before:inset-0 before:left-8 md:before:left-1/2 before:w-0.5 before:bg-gradient-to-b before:from-[#5336CC] before:via-[#8B77A4] before:to-[#252425]">
+          
+          <!-- Step 1 -->
+          <div class="relative flex flex-col md:flex-row items-start md:items-center gap-8 group">
+            <div class="md:w-1/2 md:text-right pr-6 md:pr-10">
+              <span class="font-mono text-xs text-[#5336CC] font-bold uppercase">Phase 01 &middot; Day 1</span>
+              <h3 class="font-heading text-xl text-[#252425] font-bold">Autoclave Composite Pressing</h3>
+              <p class="text-xs text-[#5A585B] mt-1">High-pressure curing at 8 bars and 140°C eliminates air voids in the carbon weave.</p>
+            </div>
+            <div class="w-10 h-10 rounded-full bg-white border-2 border-[#5336CC] shadow-md flex items-center justify-center font-mono text-xs font-black text-[#5336CC] z-10">1</div>
+            <div class="md:w-1/2 pl-6 md:pl-10">
+              <span class="text-xs font-mono text-[#8B77A4]">Tolerance verification: ±0.03mm</span>
+            </div>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="relative flex flex-col md:flex-row items-start md:items-center gap-8 group">
+            <div class="md:w-1/2 md:text-right pr-6 md:pr-10 order-1 md:order-1">
+              <span class="text-xs font-mono text-[#8B77A4]">Dual-shot injection molding</span>
+            </div>
+            <div class="w-10 h-10 rounded-full bg-white border-2 border-[#8B77A4] shadow-md flex items-center justify-center font-mono text-xs font-black text-[#8B77A4] z-10 order-2">2</div>
+            <div class="md:w-1/2 pl-6 md:pl-10 order-3">
+              <span class="font-mono text-xs text-[#8B77A4] font-bold uppercase">Phase 02 &middot; Day 2</span>
+              <h3 class="font-heading text-xl text-[#252425] font-bold">TPU Corner Cavity Bonding</h3>
+              <p class="text-xs text-[#5A585B] mt-1">Four corner air chambers are molecularly fused to the rigid composite backplate.</p>
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="relative flex flex-col md:flex-row items-start md:items-center gap-8 group">
+            <div class="md:w-1/2 md:text-right pr-6 md:pr-10">
+              <span class="font-mono text-xs text-[#5336CC] font-bold uppercase">Phase 03 &middot; Day 2</span>
+              <h3 class="font-heading text-xl text-[#252425] font-bold">18N MagSafe Array Calibration</h3>
+              <p class="text-xs text-[#5A585B] mt-1">36 N52 neodymium arc magnets are positioned with direct flux-alignment.</p>
+            </div>
+            <div class="w-10 h-10 rounded-full bg-white border-2 border-[#5336CC] shadow-md flex items-center justify-center font-mono text-xs font-black text-[#5336CC] z-10">3</div>
+            <div class="md:w-1/2 pl-6 md:pl-10">
+              <span class="text-xs font-mono text-[#8B77A4]">Magnetic holding force: 18.2 Newtons</span>
+            </div>
+          </div>
+
+          <!-- Step 4 -->
+          <div class="relative flex flex-col md:flex-row items-start md:items-center gap-8 group">
+            <div class="md:w-1/2 md:text-right pr-6 md:pr-10 order-1 md:order-1">
+              <span class="text-xs font-mono text-[#8B77A4]">7075-T6 Aerospace Aluminum</span>
+            </div>
+            <div class="w-10 h-10 rounded-full bg-white border-2 border-[#8B77A4] shadow-md flex items-center justify-center font-mono text-xs font-black text-[#8B77A4] z-10 order-2">4</div>
+            <div class="md:w-1/2 pl-6 md:pl-10 order-3">
+              <span class="font-mono text-xs text-[#8B77A4] font-bold uppercase">Phase 04 &middot; Day 3</span>
+              <h3 class="font-heading text-xl text-[#252425] font-bold">0.12mm CNC Aluminum Milling</h3>
+              <p class="text-xs text-[#5A585B] mt-1">Camera protection rings and independent cantilever buttons are precision-sculpted.</p>
+            </div>
+          </div>
+
+          <!-- Step 5 -->
+          <div class="relative flex flex-col md:flex-row items-start md:items-center gap-8 group">
+            <div class="md:w-1/2 md:text-right pr-6 md:pr-10">
+              <span class="font-mono text-xs text-[#5336CC] font-bold uppercase">Phase 05 &middot; Day 3</span>
+              <h3 class="font-heading text-xl text-[#252425] font-bold">Bespoke Laser Monogramming</h3>
+              <p class="text-xs text-[#5A585B] mt-1">Client initials or emblems are laser-stamped with 24K gold foil or deep blind deboss.</p>
+            </div>
+            <div class="w-10 h-10 rounded-full bg-white border-2 border-[#5336CC] shadow-md flex items-center justify-center font-mono text-xs font-black text-[#5336CC] z-10">5</div>
+            <div class="md:w-1/2 pl-6 md:pl-10">
+              <span class="text-xs font-mono text-[#8B77A4]">Individual Serial Registry generation</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 3: Interactive Ballistic Drop Simulator -->
+    <section id="mil-spec" class="ron-section ron-section-lg border-b border-[#8B77A4]/20">
+      <div class="ron-container">
+        
+        <div class="max-w-2xl mb-12">
+          <div class="micro-label mb-3">BALLISTIC LAB & IMPACT RIG</div>
+          <h2 class="font-heading text-4xl sm:text-5xl text-[#252425] mb-4 text-split-reveal">
+            Mil-Spec Drop Simulator.
+          </h2>
+          <p class="text-[#5A585B] font-light">
+            Every case architecture is subjected to 26 consecutive drops onto industrial reinforced concrete. Test the shock absorption curve across impact heights:
+          </p>
+        </div>
+
+        <div class="bg-white border border-[#8B77A4]/25 rounded-3xl p-8 sm:p-12 shadow-xl">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            
+            <div class="lg:col-span-5 space-y-6">
+              <div class="text-xs font-mono uppercase tracking-wider text-[#8B77A4] font-bold">1. Select Drop Elevation</div>
+              <div class="grid grid-cols-3 gap-3">
+                <button class="drop-sim-btn ron-seg-btn active" data-height="6" data-speed="13.8" data-force="1.2">
+                  <div class="font-mono text-lg font-bold">6 ft</div>
+                  <div class="text-[10px] text-[#5A585B]">Standard Drop</div>
+                </button>
+                <button class="drop-sim-btn ron-seg-btn" data-height="12" data-speed="19.5" data-force="2.6">
+                  <div class="font-mono text-lg font-bold">12 ft</div>
+                  <div class="text-[10px] text-[#5336CC] font-bold">Stairwell Drop</div>
+                </button>
+                <button class="drop-sim-btn ron-seg-btn" data-height="16" data-speed="22.6" data-force="3.8">
+                  <div class="font-mono text-lg font-bold">16 ft</div>
+                  <div class="text-[10px] text-[#5336CC] font-bold">Mil-Spec 810H</div>
+                </button>
+              </div>
+
+              <div class="space-y-3 font-mono text-xs bg-[#F6F5F9] p-5 rounded-2xl border border-[#8B77A4]/20">
+                <div class="flex justify-between">
+                  <span class="text-[#8B77A4]">TERMINAL IMPACT VELOCITY</span>
+                  <span id="sim-velocity" class="text-[#252425] font-bold">13.8 mph / 22.2 km/h</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-[#8B77A4]">PEAK DECELERATION FORCE</span>
+                  <span id="sim-force" class="text-[#5336CC] font-bold">1.2 kN Dissipated</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-[#8B77A4]">INTERNAL GLASS SURVIVAL</span>
+                  <span id="sim-survival" class="text-[#5336CC] font-bold">100% Zero Chassis Deformation</span>
+                </div>
+              </div>
+
+              <button id="trigger-drop-btn" class="ron-btn ron-btn-primary w-full justify-center shadow-lg">
+                <span>Simulate Kinetic Impact Cycle</span>
+                <span class="font-mono text-xs">&rarr;</span>
+              </button>
+            </div>
+
+            <div class="lg:col-span-7 flex flex-col items-center justify-center p-8 bg-[#252425] text-white rounded-2xl border border-[#8B77A4]/30 relative min-h-[320px]">
+              <div id="drop-visual-status" class="font-mono text-xs text-[#8B77A4] mb-4">AWAITING IMPACT CYCLE TRIGGER</div>
+
+              <div class="relative w-48 h-48 flex items-center justify-center">
+                <div id="shock-wave-outer" class="absolute inset-0 rounded-full border-2 border-[#5336CC] transition-all duration-700"></div>
+                <div id="shock-wave-inner" class="absolute w-32 h-32 rounded-full border border-[#8B77A4] transition-all duration-500"></div>
+                <div class="relative z-10 w-20 h-20 rounded-2xl bg-white text-[#252425] border border-white/20 flex flex-col items-center justify-center shadow-xl">
+                  <span class="font-mono text-xs font-black text-[#5336CC]">RON</span>
+                  <span class="text-[8px] font-mono text-[#8B77A4] font-bold">CORE 04</span>
+                </div>
+              </div>
+
+              <div id="sim-log" class="mt-6 font-mono text-xs text-[#5336CC] tracking-widest text-center font-bold">
+                ✓ ALL 4 CORNER AIR-POCKET CAVITIES VERIFIED NORMAL
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- Global Slide-Out Cart Drawer -->
+  <div id="ron-cart-overlay" class="ron-cart-drawer-overlay">
+    <div class="ron-cart-drawer">
+      <div class="ron-cart-header">
+        <div class="flex items-center gap-3">
+          <h3 class="font-heading text-lg font-bold text-[#252425]">Your Shopping Bag</h3>
+          <span class="text-xs font-mono text-[#5336CC] font-bold uppercase tracking-wider">RON ATELIER</span>
+        </div>
+        <button id="ron-cart-close" class="ron-cart-close" aria-label="Close Bag">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <div class="px-7 pt-4 bg-[#F8F7FB]">
+        <div id="ron-free-shipping-msg" class="text-xs font-mono text-[#5A585B]"></div>
+        <div class="ron-progress-track">
+          <div id="ron-free-shipping-bar" class="ron-progress-bar" style="width: 0%"></div>
+        </div>
+      </div>
+
+      <div id="ron-cart-items-list" class="ron-cart-items"></div>
+
+      <div class="ron-cart-footer">
+        <div class="flex gap-2 mb-4">
+          <input id="ron-promo-input" type="text" placeholder="PROMO CODE (e.g. RON15)" class="flex-1 bg-white border border-[#8B77A4]/25 rounded-xl px-4 py-2 text-xs font-mono text-[#252425] placeholder-[#8B77A4] uppercase outline-none focus:border-[#5336CC]" />
+          <button id="ron-promo-apply" class="ron-btn ron-btn-secondary ron-btn-sm px-4">Apply</button>
+        </div>
+
+        <div class="space-y-2 mb-5 font-mono text-xs">
+          <div class="flex justify-between text-[#5A585B]">
+            <span>Subtotal</span>
+            <span id="ron-cart-subtotal" class="text-[#252425] font-bold">$0.00</span>
+          </div>
+          <div id="ron-cart-discount-row" class="flex justify-between text-[#5336CC]" style="display: none;">
+            <span>Privilege Discount</span>
+            <span id="ron-cart-discount">-$0.00</span>
+          </div>
+          <div class="flex justify-between text-[#5A585B]">
+            <span>Express Courier</span>
+            <span id="ron-cart-shipping" class="text-[#252425] font-bold">$12.00</span>
+          </div>
+          <div class="flex justify-between text-base pt-3 border-t border-[#8B77A4]/20 text-[#252425] font-black">
+            <span>Total</span>
+            <span id="ron-cart-total" class="text-[#5336CC]">$0.00</span>
+          </div>
+        </div>
+
+        <a href="checkout.html" class="ron-btn ron-btn-primary w-full justify-center shadow-xl">
+          <span>Proceed to Secure Checkout</span>
+          <span class="font-mono text-xs">&rarr;</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Global Footer -->
+  <footer class="ron-footer">
+    <div class="ron-container">
+      <div class="ron-footer-grid">
+        <div class="space-y-6">
+          <a href="index.html" class="ron-logo text-[#FEFEFF]">
+            <div class="ron-logo-mark">R</div>
+            <span class="tracking-tight text-white font-black">RON</span>
+          </a>
+          <p class="text-sm text-[#B4B0BE] max-w-sm leading-relaxed font-light">
+            Ron is a high-precision design atelier engineering bespoke custom phone cases for the world's most discerning tech lifestyle enthusiasts.
+          </p>
+          <form id="ron-newsletter-form" class="space-y-3">
+            <div class="text-xs font-mono uppercase tracking-wider text-[#FEFEFF] font-bold">Studio Roster & Drop Registry</div>
+            <div class="flex gap-2">
+              <input type="email" placeholder="architect@domain.com" required class="bg-white/10 border border-white/20 rounded-xl px-4 py-2.5 text-xs text-white placeholder-white/40 font-mono outline-none focus:border-[#5336CC] flex-1" />
+              <button type="submit" class="ron-btn ron-btn-primary ron-btn-sm px-5">Join</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="ron-footer-col">
+          <h4>Navigation</h4>
+          <ul class="ron-footer-links">
+            <li><a href="index.html">Overview</a></li>
+            <li><a href="shop.html">Shop Catalog</a></li>
+            <li><a href="customizer.html">Interactive Customizer</a></li>
+            <li><a href="craft.html">The Craft & Materials</a></li>
+            <li><a href="checkout.html">Checkout Bag</a></li>
+          </ul>
+        </div>
+
+        <div class="ron-footer-col">
+          <h4>Collections</h4>
+          <ul class="ron-footer-links">
+            <li><a href="shop.html?category=stealth">Ron Stealth (Carbon)</a></li>
+            <li><a href="shop.html?category=minimal">Ron Minimal (Leather)</a></li>
+            <li><a href="shop.html?category=armor">Ron Kinetic Armor</a></li>
+            <li><a href="shop.html?finish=clear">Frosted Crystal Series</a></li>
+            <li><a href="customizer.html">Monogram Engraving</a></li>
+          </ul>
+        </div>
+
+        <div class="ron-footer-col">
+          <h4>Engineering</h4>
+          <ul class="ron-footer-links">
+            <li><a href="craft.html#mil-spec">16ft Mil-Spec Drop Lab</a></li>
+            <li><a href="craft.html#tolerances">0.12mm CNC Tolerances</a></li>
+            <li><a href="craft.html#sustainability">Recycled Composites</a></li>
+            <li><a href="#">15-Year Guarantee</a></li>
+            <li><a href="#">Global Courier Tracking</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="py-4 border-t border-white/10 flex flex-wrap justify-between items-center text-xs font-mono text-[#8B8796]">
+        <div id="ron-live-clock">LAB TIME: 00:00:00 UTC &middot; TOKYO / SF / LONDON</div>
+        <div class="flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-[#5336CC] animate-ping"></span>
+          <span>SYSTEM STATUS: OPERATIONAL</span>
+        </div>
+      </div>
+
+      <div class="ron-footer-bottom">
+        <div>&copy; 2026 RON PRECISION HARDWARE LABS INC. ALL RIGHTS RESERVED.</div>
+        <div class="flex items-center gap-6">
+          <a href="#" class="hover:text-white transition">Privacy Architecture</a>
+          <a href="#" class="hover:text-white transition">Terms of Service</a>
+          <a href="#" class="hover:text-white transition">Certificate Registry</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script type="module">
+    import { initGlobalUI } from './js/app.js';
+    import { sounds } from './js/store.js';
+    import { initMotion } from './js/motion.js';
+
+    initGlobalUI();
+    initMotion();
+
+    const dropBtns = document.querySelectorAll('.drop-sim-btn');
+    const simVelocity = document.getElementById('sim-velocity');
+    const simForce = document.getElementById('sim-force');
+    const triggerDropBtn = document.getElementById('trigger-drop-btn');
+    const dropStatus = document.getElementById('drop-visual-status');
+    const outerWave = document.getElementById('shock-wave-outer');
+    const innerWave = document.getElementById('shock-wave-inner');
+    const simLog = document.getElementById('sim-log');
+
+    let currentHeight = 6;
+
+    dropBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        sounds.click('soft');
+        dropBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        currentHeight = btn.getAttribute('data-height');
+        const speed = btn.getAttribute('data-speed');
+        const force = btn.getAttribute('data-force');
+
+        if (simVelocity) simVelocity.textContent = `${speed} mph / ${(speed * 1.609).toFixed(1)} km/h`;
+        if (simForce) simForce.textContent = `${force} kN Dissipated`;
+      });
+    });
+
+    if (triggerDropBtn) {
+      triggerDropBtn.addEventListener('click', () => {
+        sounds.click('metallic');
+        dropStatus.textContent = `SIMULATING ${currentHeight}FT FREEFALL DROP...`;
+        dropStatus.classList.add('text-[#5336CC]');
+
+        outerWave.style.transform = 'scale(1.45)';
+        outerWave.style.borderColor = '#5336CC';
+        innerWave.style.transform = 'scale(1.25)';
+
+        setTimeout(() => {
+          sounds.click('soft');
+          outerWave.style.transform = 'scale(1)';
+          outerWave.style.borderColor = '#8B77A4';
+          innerWave.style.transform = 'scale(1)';
+          dropStatus.textContent = `CYCLE COMPLETED: 100% SHOCK ABSORPTION AT ${currentHeight}FT`;
+          dropStatus.classList.remove('text-[#5336CC]');
+          dropStatus.classList.add('text-white');
+          simLog.textContent = `✓ 0.00mm CHASSIS FLEX &middot; ZERO GLASS CONTACT &middot; TEST PASSED`;
+        }, 650);
+      });
+    }
+  </script>
+</body>
+</html>

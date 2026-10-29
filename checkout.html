@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Secure Checkout &mdash; RON Hardware Atelier</title>
+  <meta name="description" content="Complete your bespoke Ron phone case order with encrypted checkout, Apple Pay, Google Pay, and complimentary express courier.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- GSAP 3 & ScrollTrigger for Awwwards-Level Fluid Motion -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%235336CC'/><text y='.75em' x='50%' text-anchor='middle' font-family='sans-serif' font-weight='900' font-size='60' fill='%23FEFEFF'>R</text></svg>">
+</head>
+<body class="bg-[#FEFEFF] text-[#252425] selection:bg-[#5336CC] selection:text-[#FEFEFF]">
+
+  <canvas id="ron-ambient-canvas" class="fixed inset-0 pointer-events-none z-0 opacity-60"></canvas>
+
+  <!-- Top Announcement Bar -->
+  <div class="ron-top-bar">
+    <div class="ron-container flex justify-between items-center text-[11px] uppercase tracking-widest text-[#B4B0BE]">
+      <div class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-[#5336CC] inline-block shadow-[0_0_8px_#5336CC]"></span>
+        <span>256-Bit TLS End-to-End Encrypted Terminal</span>
+      </div>
+      <div class="hidden sm:flex items-center gap-6">
+        <span>Dispatched via DHL Express Worldwide</span>
+        <span class="text-[#8B77A4]/40">|</span>
+        <span>15-Year Structural Guarantee Included</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="border-b border-[#8B77A4]/25 bg-white/90 backdrop-blur-xl sticky top-0 z-50">
+    <div class="ron-container h-16 flex items-center justify-between">
+      <a href="index.html" class="ron-logo">
+        <div class="ron-logo-mark">R</div>
+        <span class="tracking-tight text-xl font-black">RON</span>
+      </a>
+
+      <div class="flex items-center gap-4 text-xs font-mono text-[#8B77A4]">
+        <span class="hidden sm:inline font-bold">SECURE VAULT</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5336CC" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        <span class="text-[#5336CC] font-bold">ENCRYPTED</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="py-12 lg:py-16 relative z-10">
+    <div class="ron-container max-w-6xl">
+      
+      <!-- Checkout Main Grid -->
+      <div id="checkout-main-grid" class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+        
+        <!-- LEFT COLUMN: Express Checkout & Form (7 Cols) -->
+        <div class="lg:col-span-7 space-y-8">
+          
+          <!-- Express Payment Buttons -->
+          <div>
+            <div class="micro-label mb-3">EXPRESS PRIVILEGE CHECKOUT</div>
+            <div class="grid grid-cols-2 gap-4">
+              <!-- Apple Pay Mock -->
+              <button id="apple-pay-btn" class="flex items-center justify-center gap-2 py-3.5 px-6 rounded-xl bg-[#252425] text-white font-heading font-bold text-sm hover:bg-black transition shadow-lg">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.42c.6-1.08 1.01-2.57.81-4.08-1.12.05-2.51.75-3.32 1.7-.58.67-1.1 1.77-.96 3.24 1.25.1 2.57-.63 3.47-1.66z"/>
+                </svg>
+                <span>Pay</span>
+              </button>
+
+              <!-- Google Pay Mock -->
+              <button id="google-pay-btn" class="flex items-center justify-center gap-2 py-3.5 px-6 rounded-xl bg-white border border-[#8B77A4]/30 text-[#252425] font-heading font-bold text-sm hover:bg-[#F6F5F9] transition shadow-md">
+                <span class="text-[#5336CC] font-mono text-sm font-black">G</span>
+                <span>Pay</span>
+              </button>
+            </div>
+
+            <div class="relative flex py-5 items-center">
+              <div class="flex-grow border-t border-[#8B77A4]/20"></div>
+              <span class="flex-shrink mx-4 font-mono text-[11px] text-[#8B77A4] uppercase tracking-widest font-bold">Or Standard Secure Checkout</span>
+              <div class="flex-grow border-t border-[#8B77A4]/20"></div>
+            </div>
+          </div>
+
+          <!-- Checkout Form -->
+          <form id="ron-checkout-form" class="space-y-8">
+            
+            <!-- Step 1: Contact -->
+            <div class="bg-white border border-[#8B77A4]/25 rounded-2xl p-6 sm:p-8 space-y-4 shadow-sm">
+              <div class="flex justify-between items-center mb-2">
+                <h3 class="font-heading text-lg font-bold text-[#252425]">1. Contact & Warranty Registry</h3>
+                <span class="text-xs font-mono text-[#5336CC] font-bold">STEP 01/03</span>
+              </div>
+              <p class="text-xs text-[#5A585B] mb-4">Your digital certificate of authenticity and 15-year guarantee will be registered to this email.</p>
+
+              <div>
+                <label class="block text-xs font-mono text-[#5A585B] mb-1.5 uppercase font-bold tracking-wider">Email Address</label>
+                <input type="email" required placeholder="client@domain.com" class="w-full bg-[#F8F7FB] border border-[#8B77A4]/30 rounded-xl px-4 py-3 text-sm text-[#252425] placeholder-[#8B77A4] outline-none focus:border-[#5336CC] font-mono" />
+              </div>
+
+              <div class="flex items-center gap-2.5 pt-2">
+                <input type="checkbox" id="chk-updates" checked class="rounded border-[#8B77A4]/40 text-[#5336CC] focus:ring-0" />
+                <label for="chk-updates" class="text-xs text-[#5A585B] select-none">Send me tracking dispatch SMS alerts & limited studio batch invites</label>
+              </div>
+            </div>
+
+            <!-- Step 2: Shipping -->
+            <div class="bg-white border border-[#8B77A4]/25 rounded-2xl p-6 sm:p-8 space-y-4 shadow-sm">
+              <div class="flex justify-between items-center mb-2">
+                <h3 class="font-heading text-lg font-bold text-[#252425]">2. Shipping Destination</h3>
+                <span class="text-xs font-mono text-[#5336CC] font-bold">STEP 02/03</span>
+              </div>
+
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-mono text-[#5A585B] mb-1.5 uppercase font-bold tracking-wider">First Name</label>
+                  <input type="text" required placeholder="Marcus" class="w-full bg-[#F8F7FB] border border-[#8B77A4]/30 rounded-xl px-4 py-3 text-sm text-[#252425] placeholder-[#8B77A4] outline-none focus:border-[#5336CC]" />
+                </div>
+                <div>
+                  <label class="block text-xs font-mono text-[#5A585B] mb-1.5 uppercase font-bold tracking-wider">Last Name</label>
+                  <input type="text" required placeholder="Vance" class="w-full bg-[#F8F7FB] border border-[#8B77A4]/30 rounded-xl px-4 py-3 text-sm text-[#252425] placeholder-[#8B77A4] outline-none focus:border-[#5336CC]" />
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-xs font-mono text-[#5A585B] mb-1.5 uppercase font-bold tracking-wider">Street Address</label>
+                <input type="text" required placeholder="742 Evergreen Terrace, Suite 400" class="w-full bg-[#F8F7FB] border border-[#8B77A4]/30 rounded-xl px-4 py-3 text-sm text-[#252425] placeholder-[#8B77A4] outline-none focus:border-[#5336CC]" />
+              </div>
+
+              <div class="grid grid-cols-3 gap-4">
+                <div>
+                  <label class="block text-xs font-mono text-[#5A585B] mb-1.5 uppercase font-bold tracking-wider">City</label>
+                  <input type="text" required placeholder="San Francisco" class="w-full bg-[#F8F7FB] border border-[#8B77A4]/30 rounded-xl px-4 py-3 text-sm text-[#252425] placeholder-[#8B77A4] outline-none focus:border-[#5336CC]" />
+                </div>
+                <div>
+                  <label class="block text-xs font-mono text-[#5A585B] mb-1.5 uppercase font-bold tracking-wider">State / Province</label>
+                  <input type="text" required placeholder="CA" class="w-full bg-[#F8F7FB] border border-[#8B77A4]/30 rounded-xl px-4 py-3 text-sm text-[#252425] placeholder-[#8B77A4] outline-none focus:border-[#5336CC]" />
+                </div>
+                <div>
+                  <label class="block text-xs font-mono text-[#5A585B] mb-1.5 uppercase font-bold tracking-wider">Postal Code</label>
+                  <input type="text" required placeholder="94107" class="w-full bg-[#F8F7FB] border border-[#8B77A4]/30 rounded-xl px-4 py-3 text-sm text-[#252425] placeholder-[#8B77A4] outline-none focus:border-[#5336CC] font-mono" />
+                </div>
+              </div>
+
+              <!-- Gift Option -->
+              <div class="mt-4 p-4 rounded-xl bg-[#5336CC]/5 border border-[#5336CC]/20 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <input type="checkbox" id="chk-gift" class="rounded border-[#8B77A4]/40 text-[#5336CC] focus:ring-0" />
+                  <div>
+                    <label for="chk-gift" class="text-xs font-heading font-bold text-[#252425] block cursor-pointer">Tactile Wax-Sealed Gift Packaging</label>
+                    <span class="text-[10px] text-[#5A585B] block">Matte keepsake box with handwritten artisan certificate</span>
+                  </div>
+                </div>
+                <span class="text-xs font-mono text-[#5336CC] uppercase font-bold">Complimentary</span>
+              </div>
+            </div>
+
+            <!-- Step 3: Payment -->
+            <div class="bg-white border border-[#8B77A4]/25 rounded-2xl p-6 sm:p-8 space-y-4 shadow-sm">
+              <div class="flex justify-between items-center mb-2">
+                <h3 class="font-heading text-lg font-bold text-[#252425]">3. Payment Authorization</h3>
+                <span class="text-xs font-mono text-[#5336CC] font-bold">STEP 03/03</span>
+              </div>
+
+              <div>
+                <label class="block text-xs font-mono text-[#5A585B] mb-1.5 uppercase font-bold tracking-wider">Card Number</label>
+                <div class="relative">
+                  <input type="text" required placeholder="•••• •••• •••• 4242" maxlength="19" class="w-full bg-[#F8F7FB] border border-[#8B77A4]/30 rounded-xl px-4 py-3 text-sm text-[#252425] placeholder-[#8B77A4] outline-none focus:border-[#5336CC] font-mono tracking-widest" />
+                  <div class="absolute right-4 top-3.5 flex gap-2 opacity-60">
+                    <span class="font-mono text-xs font-bold text-[#5336CC]">VISA</span>
+                    <span class="font-mono text-xs font-bold text-[#8B77A4]">MC</span>
+                    <span class="font-mono text-xs font-bold text-[#252425]">AMEX</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-mono text-[#5A585B] mb-1.5 uppercase font-bold tracking-wider">Expires (MM/YY)</label>
+                  <input type="text" required placeholder="12/28" maxlength="5" class="w-full bg-[#F8F7FB] border border-[#8B77A4]/30 rounded-xl px-4 py-3 text-sm text-[#252425] placeholder-[#8B77A4] outline-none focus:border-[#5336CC] font-mono text-center" />
+                </div>
+                <div>
+                  <label class="block text-xs font-mono text-[#5A585B] mb-1.5 uppercase font-bold tracking-wider">Security CVC</label>
+                  <input type="text" required placeholder="924" maxlength="4" class="w-full bg-[#F8F7FB] border border-[#8B77A4]/30 rounded-xl px-4 py-3 text-sm text-[#252425] placeholder-[#8B77A4] outline-none focus:border-[#5336CC] font-mono text-center" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Submit CTA -->
+            <button type="submit" id="pay-now-btn" class="ron-btn ron-btn-primary w-full justify-center text-base py-5 group shadow-2xl">
+              <span id="btn-submit-text">Authorize & Confirm Bespoke Order</span>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="transition-transform group-hover:translate-x-1"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </form>
+
+        </div>
+
+        <!-- RIGHT COLUMN: Luxury Order Summary (5 Cols) -->
+        <div class="lg:col-span-5 space-y-6 lg:sticky lg:top-24">
+          
+          <div class="bg-white border border-[#8B77A4]/25 rounded-2xl p-6 sm:p-8 shadow-sm">
+            <div class="flex justify-between items-center pb-4 mb-6 border-b border-[#8B77A4]/20">
+              <h3 class="font-heading text-lg font-bold text-[#252425]">Order Summary</h3>
+              <span id="order-item-count" class="text-xs font-mono text-[#5336CC] font-bold">0 Items</span>
+            </div>
+
+            <div id="checkout-items-list" class="space-y-4 mb-6"></div>
+
+            <div class="space-y-2.5 font-mono text-xs border-t border-[#8B77A4]/20 pt-4">
+              <div class="flex justify-between text-[#5A585B]">
+                <span>Subtotal</span>
+                <span id="co-subtotal" class="text-[#252425] font-bold">$0.00</span>
+              </div>
+              <div id="co-discount-row" class="flex justify-between text-[#5336CC]" style="display: none;">
+                <span>Applied Architect Privilege</span>
+                <span id="co-discount">-$0.00</span>
+              </div>
+              <div class="flex justify-between text-[#5A585B]">
+                <span>Express Worldwide Courier</span>
+                <span id="co-shipping" class="text-[#252425] font-bold">$12.00</span>
+              </div>
+              <div class="flex justify-between text-lg pt-4 border-t border-[#8B77A4]/20 text-[#252425] font-black">
+                <span>Total Due</span>
+                <span id="co-total" class="text-[#5336CC] font-black">$0.00</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-[#F6F5F9] border border-[#8B77A4]/20 space-y-3">
+            <div class="flex items-center gap-3">
+              <div class="w-2.5 h-2.5 rounded-full bg-[#5336CC] shadow-[0_0_8px_#5336CC]"></div>
+              <span class="font-mono text-xs text-[#252425] uppercase tracking-wider font-bold">Ron Atelier Guarantee</span>
+            </div>
+            <p class="text-xs text-[#5A585B] leading-relaxed">
+              Every customized phone case undergoes 3-stage laser tolerance verification and hand finishing. If your monogram deboss ever peels or degrades, we recast your case free of charge.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- SUCCESS / RECEIPT CERTIFICATE VIEW -->
+      <div id="checkout-success-view" class="hidden flex-col items-center justify-center py-12 max-w-2xl mx-auto">
+        
+        <div class="w-full bg-[#252425] text-white border border-[#8B77A4]/30 rounded-3xl p-8 sm:p-12 shadow-2xl relative overflow-hidden">
+          
+          <div class="absolute -top-12 -right-12 w-48 h-48 rounded-full border border-[#5336CC]/20 opacity-30 pointer-events-none flex items-center justify-center">
+            <div class="w-32 h-32 rounded-full border border-[#8B77A4]/30"></div>
+          </div>
+
+          <div class="flex items-center justify-between pb-6 mb-8 border-b border-white/10">
+            <div class="flex items-center gap-3">
+              <div class="ron-logo-mark">R</div>
+              <div>
+                <h2 class="font-heading font-bold text-xl text-white">RON LABS CERTIFICATE</h2>
+                <span class="text-[10px] font-mono text-[#5336CC] uppercase font-bold">OFFICIAL REGISTRATION OF OWNERSHIP</span>
+              </div>
+            </div>
+            <div class="text-right">
+              <div class="text-[10px] font-mono text-[#8B77A4]">SERIAL CODE</div>
+              <div id="receipt-serial-code" class="font-mono text-sm font-bold text-white tracking-widest">RON-2026-9814-PX</div>
+            </div>
+          </div>
+
+          <div class="space-y-4 mb-8">
+            <div class="bg-black/40 p-6 rounded-2xl border border-white/10 space-y-3 font-mono text-xs">
+              <div class="flex justify-between">
+                <span class="text-white/60">ORDER STATUS</span>
+                <span class="text-[#5336CC] font-bold">QUEUED FOR LASER ENGRAVING</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-white/60">ESTIMATED DISPATCH</span>
+                <span class="text-white font-semibold">Within 72 Hours via DHL Express</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-white/60">WARRANTY TIED TO</span>
+                <span id="receipt-email" class="text-white font-semibold">customer@domain.com</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-white/60">TOTAL TRANSACTED</span>
+                <span id="receipt-total" class="text-white font-bold">$94.00</span>
+              </div>
+            </div>
+
+            <p class="text-xs text-[#B4B0BE] leading-relaxed font-light">
+              Your custom case order has been transmitted directly to our CNC milling station. A confirmation packet with tracking and high-res vector proofs has been sent to your inbox.
+            </p>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-4">
+            <a href="index.html" class="ron-btn ron-btn-primary flex-1 justify-center shadow-lg">
+              Return to Store Overview
+            </a>
+            <a href="shop.html" class="ron-btn ron-btn-secondary flex-1 justify-center">
+              Browse More Series
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Global Footer -->
+  <footer class="ron-footer">
+    <div class="ron-container">
+      <div class="ron-footer-bottom">
+        <div>&copy; 2026 RON PRECISION HARDWARE LABS INC. ALL RIGHTS RESERVED.</div>
+        <div class="flex items-center gap-6">
+          <a href="#" class="hover:text-white transition">Privacy Architecture</a>
+          <a href="#" class="hover:text-white transition">Terms of Service</a>
+          <a href="#" class="hover:text-white transition">Certificate Registry</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script type="module">
+    import { cart, sounds, showToast } from './js/store.js';
+    import { initMotion } from './js/motion.js';
+
+    initMotion();
+
+    const itemsContainer = document.getElementById('checkout-items-list');
+    const itemCountEl = document.getElementById('order-item-count');
+    const coSubtotal = document.getElementById('co-subtotal');
+    const coDiscount = document.getElementById('co-discount');
+    const coDiscountRow = document.getElementById('co-discount-row');
+    const coShipping = document.getElementById('co-shipping');
+    const coTotal = document.getElementById('co-total');
+    const form = document.getElementById('ron-checkout-form');
+    const mainGrid = document.getElementById('checkout-main-grid');
+    const successView = document.getElementById('checkout-success-view');
+    const receiptSerial = document.getElementById('receipt-serial-code');
+    const receiptEmail = document.getElementById('receipt-email');
+    const receiptTotal = document.getElementById('receipt-total');
+    const payNowBtn = document.getElementById('pay-now-btn');
+    const btnSubmitText = document.getElementById('btn-submit-text');
+
+    function renderCheckoutSummary() {
+      const state = cart.getState();
+
+      if (state.items.length === 0) {
+        itemsContainer.innerHTML = `
+          <div class="py-8 text-center">
+            <p class="text-sm text-[#5A585B] mb-4">No items in your bag to checkout.</p>
+            <a href="shop.html" class="ron-btn ron-btn-primary ron-btn-sm">Explore Collection</a>
+          </div>
+        `;
+        if (payNowBtn) payNowBtn.disabled = true;
+      } else {
+        if (payNowBtn) payNowBtn.disabled = false;
+        itemsContainer.innerHTML = state.items.map(item => `
+          <div class="flex gap-4 pb-4 border-b border-[#8B77A4]/15">
+            <div class="w-16 h-20 rounded-xl bg-[#F6F5F9] border border-[#8B77A4]/20 overflow-hidden flex-shrink-0">
+              <img src="${item.studioImg || 'https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?auto=format&fit=crop&w=300&q=80'}" alt="${item.name}" class="w-full h-full object-cover" />
+            </div>
+            <div class="flex-1 flex flex-col justify-between">
+              <div>
+                <div class="flex justify-between items-start">
+                  <h4 class="font-heading font-semibold text-sm text-[#252425]">${item.name}</h4>
+                  <span class="font-mono text-xs text-[#5336CC] font-bold">${cart.formatPrice(item.priceUSD * item.qty)}</span>
+                </div>
+                <p class="text-xs text-[#5A585B] mt-0.5">${item.device || 'iPhone 16 Pro Max'} &middot; Qty: ${item.qty}</p>
+                ${item.monogramText ? `
+                  <div class="mt-1.5">
+                    <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-[#5336CC]/10 border border-[#5336CC]/30 text-[#5336CC] font-bold">
+                      Monogram: "${item.monogramText}" (${item.monogramFoil || 'Gold'})
+                    </span>
+                  </div>
+                ` : ''}
+              </div>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      if (itemCountEl) itemCountEl.textContent = `${state.count} ${state.count === 1 ? 'Item' : 'Items'}`;
+      if (coSubtotal) coSubtotal.textContent = cart.formatPrice(state.subtotalUSD);
+      if (coShipping) coShipping.textContent = state.shippingUSD === 0 ? 'Complimentary' : cart.formatPrice(state.shippingUSD);
+      if (coTotal) coTotal.textContent = cart.formatPrice(state.finalTotalUSD);
+
+      if (coDiscountRow) {
+        if (state.discountUSD > 0) {
+          coDiscountRow.style.display = 'flex';
+          if (coDiscount) coDiscount.textContent = `-${cart.formatPrice(state.discountUSD)}`;
+        } else {
+          coDiscountRow.style.display = 'none';
+        }
+      }
+    }
+
+    renderCheckoutSummary();
+    cart.subscribe(renderCheckoutSummary);
+
+    form?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      handleSuccessfulOrder();
+    });
+
+    document.getElementById('apple-pay-btn')?.addEventListener('click', () => {
+      handleSuccessfulOrder('Apple Pay Express');
+    });
+    document.getElementById('google-pay-btn')?.addEventListener('click', () => {
+      handleSuccessfulOrder('Google Pay Express');
+    });
+
+    function handleSuccessfulOrder(paymentMethod = 'Credit Card') {
+      sounds.click('metallic');
+      const state = cart.getState();
+      const finalAmt = cart.formatPrice(state.finalTotalUSD);
+      
+      const emailInput = form ? form.querySelector('input[type="email"]') : null;
+      const emailVal = emailInput ? emailInput.value : 'client@ron-atelier.com';
+
+      if (btnSubmitText) btnSubmitText.textContent = 'Processing with Ron Vault...';
+      if (payNowBtn) payNowBtn.disabled = true;
+
+      setTimeout(() => {
+        const randomSerial = `RON-2026-${Math.floor(1000 + Math.random() * 9000)}-${['PX', 'CF', 'ST', 'AT'][Math.floor(Math.random() * 4)]}`;
+
+        if (receiptSerial) receiptSerial.textContent = randomSerial;
+        if (receiptEmail) receiptEmail.textContent = emailVal || 'client@ron-atelier.com';
+        if (receiptTotal) receiptTotal.textContent = `${finalAmt} via ${paymentMethod}`;
+
+        cart.clear();
+
+        mainGrid.classList.add('hidden');
+        successView.classList.remove('hidden');
+        successView.classList.add('flex');
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        showToast('Bespoke Phone Case Order Authorized Successfully!', 'success');
+      }, 1000);
+    }
+  </script>
+</body>
+</html>

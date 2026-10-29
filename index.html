@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RON &mdash; Premium Phone Cases for Modern Life</title>
+  <meta name="description" content="Sleek. Durable. Designed for your iPhone. High-precision bespoke phone cases crafted for modern life and outdoor adventures.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- GSAP 3 & ScrollTrigger for Awwwards-Level Fluid Physics -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%235336CC'/><text y='.75em' x='50%' text-anchor='middle' font-family='sans-serif' font-weight='900' font-size='60' fill='%23FEFEFF'>R</text></svg>">
+</head>
+<body class="bg-[#FEFEFF] text-[#252425] selection:bg-[#5336CC] selection:text-[#FEFEFF]">
+
+  <!-- Background Ambient Glow & Vector CAD Schematics -->
+  <canvas id="ron-ambient-canvas" class="fixed inset-0 pointer-events-none z-0 opacity-60"></canvas>
+
+  <!-- Top Announcement Bar (Dark Contrast) -->
+  <div class="ron-top-bar">
+    <div class="ron-container flex justify-between items-center text-[11px] uppercase tracking-widest text-[#B4B0BE]">
+      <div class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-[#5336CC] inline-block shadow-[0_0_8px_#5336CC] animate-pulse"></span>
+        <span>Studio Batch 09 &middot; Matte Black & Carbon Fiber Editions Live</span>
+      </div>
+      <div class="hidden sm:flex items-center gap-6">
+        <span>Complimentary Worldwide Express Courier on orders over $60</span>
+        <span class="text-[#8B77A4]/40">|</span>
+        <span>Lifetime Guarantee</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Global Header Navigation (Pinned Glassmorphic Bar) -->
+  <header class="ron-nav-wrapper">
+    <div class="ron-container">
+      <nav class="ron-nav">
+        <!-- Brand Logo -->
+        <a href="index.html" class="ron-logo group">
+          <div class="ron-logo-mark">R</div>
+          <span class="tracking-tight text-2xl font-black">RON</span>
+        </a>
+
+        <!-- Main Nav Links -->
+        <ul class="ron-nav-links">
+          <li><a href="shop.html" class="ron-nav-link">Shop</a></li>
+          <li><a href="customizer.html" class="ron-nav-link">On-Demand</a></li>
+          <li><a href="craft.html" class="ron-nav-link">The Craft</a></li>
+        </ul>
+
+        <!-- Right Side Utility Controls -->
+        <div class="ron-nav-actions">
+          <!-- Search Trigger -->
+          <button id="ron-search-btn" class="p-2.5 rounded-full hover:bg-black/5 text-[#252425] transition" aria-label="Search Catalog" title="Search Cases">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </button>
+
+          <!-- Account Trigger -->
+          <a href="craft.html#account" class="p-2.5 rounded-full hover:bg-black/5 text-[#252425] transition hidden sm:inline-flex" aria-label="Account">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </a>
+
+          <!-- Currency Selector -->
+          <select class="ron-currency-select" aria-label="Select Currency">
+            <option value="USD">USD ($)</option>
+            <option value="EUR">EUR (€)</option>
+            <option value="GBP">GBP (£)</option>
+            <option value="JPY">JPY (¥)</option>
+          </select>
+
+          <!-- Shopping Bag Button -->
+          <button id="ron-cart-toggle" class="ron-cart-btn" aria-label="Open Bag">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+              <line x1="3" y1="6" x2="21" y2="6"/>
+              <path d="M16 10a4 4 0 0 1-8 0"/>
+            </svg>
+            <span>Bag</span>
+            <span id="ron-cart-badge" class="ron-cart-badge">0</span>
+          </button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="relative z-10">
+
+    <!-- =========================================================================
+         SECTION 01: HERO SECTION ("Protect What Moves You")
+         Atmospheric Mountain Peaks Background + Tilted Phone Case + Floating 3D Rocks
+         ========================================================================= -->
+    <section class="ron-hero-cinematic">
+      <div class="ron-container flex-1 flex flex-col justify-center">
+        <div class="ron-hero-cinematic-split">
+          
+          <!-- LEFT COLUMN: Typography & Magnetic Action -->
+          <div class="flex flex-col items-start pr-0 lg:pr-6">
+            <div class="micro-label white mb-4 text-[#FEFEFF]/90">
+              PROTECT WHAT MOVES YOU
+            </div>
+
+            <h1 class="font-display text-5xl sm:text-7xl lg:text-8xl tracking-tight text-[#FEFEFF] mb-6 text-split-reveal">
+              Premium Phone Cases for Modern Life
+            </h1>
+
+            <p class="text-lg sm:text-xl text-[#FEFEFF]/80 max-w-xl font-body font-light mb-8 leading-relaxed">
+              Sleek. Durable. Designed for your iPhone. Engineered with tactile composite materials, MagSafe arrays, and Mil-Spec drop resistance.
+            </p>
+
+            <div class="flex flex-wrap items-center gap-4 sm:gap-6">
+              <a href="shop.html" class="ron-btn ron-btn-primary ron-btn-lg group shadow-2xl">
+                <span>Shop Now</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="transition-transform group-hover:translate-x-1">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </a>
+
+              <a href="customizer.html" class="ron-btn ron-btn-secondary ron-btn-lg bg-white/10 hover:bg-white/20 text-[#FEFEFF] border-white/20">
+                Design Your Own &rarr;
+              </a>
+            </div>
+          </div>
+
+          <!-- RIGHT COLUMN: 3D Floating Stage (Tilted Phone Case + Orbiting Basalt Rocks) -->
+          <div class="relative flex items-center justify-center">
+            <div class="ron-floating-stage">
+              <!-- Floating 3D Basalt Rocks with Parallax -->
+              <img src="assets/rock-1.svg" alt="Floating 3D Rock" class="ron-floating-rock ron-rock-1" />
+              <img src="assets/rock-2.svg" alt="Floating 3D Rock" class="ron-floating-rock ron-rock-2" />
+              <img src="assets/rock-3.svg" alt="Floating 3D Rock" class="ron-floating-rock ron-rock-3" />
+              <img src="assets/rock-4.svg" alt="Floating 3D Rock" class="ron-floating-rock ron-rock-4" />
+
+              <!-- Tilted Matte Black Phone Case -->
+              <a href="shop.html?product=ron-matte-black" title="View Matte Black Case" class="block">
+                <img
+                  src="assets/case-matte-black.svg"
+                  alt="Ron Matte Black Phone Case tilted with triple sapphire camera lenses"
+                  class="ron-hero-tilted-case ron-floating-case"
+                />
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Minimalist Scroll Mouse Indicator -->
+      <a href="#trust-bar" class="ron-scroll-indicator text-white" aria-label="Scroll Down">
+        <div class="ron-mouse-icon">
+          <div class="ron-mouse-wheel"></div>
+        </div>
+        <span class="text-[10px] font-mono uppercase tracking-widest text-[#FEFEFF]/70">Scroll</span>
+      </a>
+    </section>
+
+    <!-- =========================================================================
+         FEATURE BAR / TRUST RIBBON (4 Badges Under Hero)
+         ========================================================================= -->
+    <section id="trust-bar" class="ron-trust-bar">
+      <div class="ron-container">
+        <div class="ron-trust-grid">
+          
+          <!-- Item 1: Premium Materials -->
+          <div class="ron-trust-item">
+            <div class="ron-trust-icon-box">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M6 3h12l4 6-10 12L2 9l4-6z"/>
+              </svg>
+            </div>
+            <div>
+              <div class="ron-trust-title">Premium Materials</div>
+              <div class="ron-trust-sub">Built to last</div>
+            </div>
+          </div>
+
+          <!-- Item 2: MagSafe Compatible -->
+          <div class="ron-trust-item">
+            <div class="ron-trust-icon-box">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="8"/>
+                <circle cx="12" cy="12" r="3"/>
+                <line x1="12" y1="2" x2="12" y2="4"/>
+                <line x1="12" y1="20" x2="12" y2="22"/>
+              </svg>
+            </div>
+            <div>
+              <div class="ron-trust-title">MagSafe Compatible</div>
+              <div class="ron-trust-sub">Seamless experience</div>
+            </div>
+          </div>
+
+          <!-- Item 3: Fast Shipping -->
+          <div class="ron-trust-item">
+            <div class="ron-trust-icon-box">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="1" y="3" width="15" height="13"/>
+                <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
+                <circle cx="5.5" cy="18.5" r="2.5"/>
+                <circle cx="18.5" cy="18.5" r="2.5"/>
+              </svg>
+            </div>
+            <div>
+              <div class="ron-trust-title">Fast Shipping</div>
+              <div class="ron-trust-sub">Worldwide delivery</div>
+            </div>
+          </div>
+
+          <!-- Item 4: Satisfaction Guarantee -->
+          <div class="ron-trust-item">
+            <div class="ron-trust-icon-box">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                <path d="m9 12 2 2 4-4"/>
+              </svg>
+            </div>
+            <div>
+              <div class="ron-trust-title">Satisfaction Guarantee</div>
+              <div class="ron-trust-sub">Shop with confidence</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         SECTION 02: BEST SELLERS ("Most Popular Cases")
+         5-Column Grid: Matte Black, Stone Gray, Deep Blue, Sand Beige, Carbon Fiber
+         ========================================================================= -->
+    <section class="ron-section ron-section-lg border-b border-[#8B77A4]/20">
+      <div class="ron-container">
+        
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+          <div>
+            <div class="micro-label mb-2">BEST SELLERS</div>
+            <h2 class="font-heading text-4xl sm:text-5xl text-[#252425] text-split-reveal">
+              Most Popular Cases
+            </h2>
+          </div>
+          <a href="shop.html" class="ron-nav-link font-mono text-sm font-bold text-[#5336CC] flex items-center gap-1 group">
+            <span>View All</span>
+            <span class="transition-transform group-hover:translate-x-1">&rarr;</span>
+          </a>
+        </div>
+
+        <!-- 5-Column Responsive Product Grid -->
+        <div class="ron-bestsellers-grid">
+          
+          <!-- Card 1: Matte Black -->
+          <div class="ron-case-card group">
+            <a href="shop.html?product=ron-matte-black" class="ron-case-preview">
+              <img src="assets/case-matte-black.svg" alt="Matte Black Case" loading="lazy" />
+            </a>
+            <div class="ron-case-details">
+              <h3 class="ron-case-title">Matte Black</h3>
+              <div class="flex items-center justify-between mt-1 mb-4">
+                <span class="ron-case-price" data-usd="38">$38.00</span>
+                <span class="w-3.5 h-3.5 rounded-full bg-[#1E1D1F] border border-black/20" title="Matte Black"></span>
+              </div>
+              <div class="flex gap-2">
+                <button class="ron-btn ron-btn-primary ron-btn-sm w-full ron-quick-add" data-id="ron-matte-black">
+                  Add to Bag
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2: Stone Gray -->
+          <div class="ron-case-card group">
+            <a href="shop.html?product=ron-stone-gray" class="ron-case-preview">
+              <img src="assets/case-stone-gray.svg" alt="Stone Gray Case" loading="lazy" />
+            </a>
+            <div class="ron-case-details">
+              <h3 class="ron-case-title">Stone Gray</h3>
+              <div class="flex items-center justify-between mt-1 mb-4">
+                <span class="ron-case-price" data-usd="39">$39.00</span>
+                <span class="w-3.5 h-3.5 rounded-full bg-[#7A7982] border border-black/20" title="Stone Gray"></span>
+              </div>
+              <div class="flex gap-2">
+                <button class="ron-btn ron-btn-primary ron-btn-sm w-full ron-quick-add" data-id="ron-stone-gray">
+                  Add to Bag
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 3: Deep Blue -->
+          <div class="ron-case-card group">
+            <a href="shop.html?product=ron-deep-blue" class="ron-case-preview">
+              <img src="assets/case-deep-blue.svg" alt="Deep Blue Case" loading="lazy" />
+            </a>
+            <div class="ron-case-details">
+              <h3 class="ron-case-title">Deep Blue</h3>
+              <div class="flex items-center justify-between mt-1 mb-4">
+                <span class="ron-case-price" data-usd="38">$38.00</span>
+                <span class="w-3.5 h-3.5 rounded-full bg-[#1C2A3D] border border-black/20" title="Deep Blue"></span>
+              </div>
+              <div class="flex gap-2">
+                <button class="ron-btn ron-btn-primary ron-btn-sm w-full ron-quick-add" data-id="ron-deep-blue">
+                  Add to Bag
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 4: Sand Beige -->
+          <div class="ron-case-card group">
+            <a href="shop.html?product=ron-sand-beige" class="ron-case-preview">
+              <img src="assets/case-sand-beige.svg" alt="Sand Beige Case" loading="lazy" />
+            </a>
+            <div class="ron-case-details">
+              <h3 class="ron-case-title">Sand Beige</h3>
+              <div class="flex items-center justify-between mt-1 mb-4">
+                <span class="ron-case-price" data-usd="38">$38.00</span>
+                <span class="w-3.5 h-3.5 rounded-full bg-[#D8CFBC] border border-black/20" title="Sand Beige"></span>
+              </div>
+              <div class="flex gap-2">
+                <button class="ron-btn ron-btn-primary ron-btn-sm w-full ron-quick-add" data-id="ron-sand-beige">
+                  Add to Bag
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 5: Carbon Fiber -->
+          <div class="ron-case-card group">
+            <a href="shop.html?product=ron-carbon-fiber" class="ron-case-preview">
+              <img src="assets/case-carbon-fiber.svg" alt="Carbon Fiber Case" loading="lazy" />
+            </a>
+            <div class="ron-case-details">
+              <h3 class="ron-case-title">Carbon Fiber</h3>
+              <div class="flex items-center justify-between mt-1 mb-4">
+                <span class="ron-case-price" data-usd="42">$42.00</span>
+                <span class="w-3.5 h-3.5 rounded-full bg-[#1B1A1C] border border-white/40" title="Carbon Fiber"></span>
+              </div>
+              <div class="flex gap-2">
+                <button class="ron-btn ron-btn-primary ron-btn-sm w-full ron-quick-add" data-id="ron-carbon-fiber">
+                  Add to Bag
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         SECTION 03: BRAND STATEMENT ("It's a statement.")
+         Dark Atmospheric Split with High-Contrast Human Hand Gripping Case
+         ========================================================================= -->
+    <section class="ron-statement-section py-24 sm:py-32">
+      <div class="ron-container">
+        <div class="ron-statement-split">
+          
+          <!-- Left: Editorial Brand Narrative -->
+          <div class="space-y-6">
+            <div class="micro-label white">
+              MORE THAN A CASE
+            </div>
+
+            <h2 class="font-heading text-4xl sm:text-6xl text-[#FEFEFF] leading-tight text-split-reveal">
+              It's a statement.
+            </h2>
+
+            <p class="text-lg text-[#FEFEFF]/80 font-light max-w-xl leading-relaxed">
+              A layer of protection. A reflection of your style. Crafted for those who move differently &mdash; engineered from shock-dispersal polymers and aerospace composites to survive daily extremes.
+            </p>
+
+            <div class="pt-4">
+              <a href="shop.html" class="ron-btn ron-btn-primary ron-btn-lg group shadow-xl">
+                <span>Explore Collection</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="transition-transform group-hover:translate-x-1">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- Right: Close-up Human Hand Editorial Photo -->
+          <div class="relative">
+            <div class="ron-hand-editorial-box group">
+              <img
+                src="https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?auto=format&fit=crop&w=1400&q=85"
+                alt="Close-up human hand holding Matte Black Ron phone case angled outward"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent flex items-end p-8 text-white">
+                <span class="font-mono text-xs text-[#8B77A4] uppercase tracking-wider font-semibold">Precision Ergonomics &middot; Matte Black Touch</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         SECTION 04: ON-DEMAND ("Create Your Own")
+         Centered Mountain Case + Sketched Annotation + 4-Step Process Cards
+         ========================================================================= -->
+    <section id="on-demand" class="ron-ondemand-hero border-b border-[#8B77A4]/20">
+      <div class="ron-container">
+        
+        <!-- Header -->
+        <div class="text-center max-w-2xl mx-auto mb-14">
+          <div class="micro-label mb-3">ON DEMAND</div>
+          <h2 class="font-heading text-4xl sm:text-6xl text-[#252425] mb-4 text-split-reveal">
+            Create Your Own
+          </h2>
+          <p class="text-[#5A585B] text-base sm:text-lg font-light leading-relaxed mb-6">
+            Turn your ideas into custom phone cases. Upload your design, add your style, and we'll handle the rest.
+          </p>
+          <a href="customizer.html" class="ron-btn ron-btn-primary ron-btn-lg group shadow-xl">
+            <span>Start Customizing</span>
+            <span class="transition-transform group-hover:translate-x-1">&rarr;</span>
+          </a>
+        </div>
+
+        <!-- Center Tilted Custom Case with Sketched Annotation -->
+        <div class="relative max-w-md mx-auto my-12 py-6 flex items-center justify-center">
+          <div class="ron-floating-stage ron-vision-stage !aspect-[1/1.3]">
+            <img src="assets/rock-2.svg" alt="Rock Fragment" class="ron-floating-rock w-16 -top-4 -left-6" />
+            <img src="assets/rock-3.svg" alt="Rock Fragment" class="ron-floating-rock w-14 bottom-8 -right-8" />
+            
+            <a href="customizer.html?style=alpine" title="Customize Alpine Case">
+              <img
+                src="assets/case-design-alpine.svg"
+                alt="Custom phone case with alpine monochrome mountain artwork"
+                class="ron-hero-tilted-case ron-floating-case"
+              />
+            </a>
+
+            <!-- Sketched Hand-Drawn Annotation Arrow -->
+            <div class="ron-sketch-annotation">
+              <span class="ron-sketch-text">Your Design Here</span>
+              <svg width="60" height="40" viewBox="0 0 60 40" fill="none" class="text-[#252425]">
+                <path d="M50 5 C40 20, 20 25, 8 32" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-dasharray="3 3"/>
+                <path d="M12 24 L6 33 L18 35" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4-Step Process Ribbon -->
+        <div class="ron-process-grid">
+          
+          <!-- Step 1: Upload Design -->
+          <div class="ron-process-card">
+            <div class="ron-step-badge">1</div>
+            <h3 class="ron-process-title">Upload Design</h3>
+            <p class="ron-process-desc">Add your image, logo, typography or choose from our curated studio templates.</p>
+          </div>
+
+          <!-- Step 2: Customize -->
+          <div class="ron-process-card">
+            <div class="ron-step-badge">2</div>
+            <h3 class="ron-process-title">Customize</h3>
+            <p class="ron-process-desc">Select your exact device, case profile, tactile finish, and MagSafe ring styling.</p>
+          </div>
+
+          <!-- Step 3: We Print -->
+          <div class="ron-process-card">
+            <div class="ron-step-badge">3</div>
+            <h3 class="ron-process-title">We Print</h3>
+            <p class="ron-process-desc">High-quality, long-lasting UV curing technology that will never fade or peel.</p>
+          </div>
+
+          <!-- Step 4: Delivered -->
+          <div class="ron-process-card">
+            <div class="ron-step-badge">4</div>
+            <h3 class="ron-process-title">Delivered</h3>
+            <p class="ron-process-desc">Get your custom bespoke phone case delivered directly to your doorstep worldwide.</p>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         SECTION 04.5: DESIGN IDEAS HORIZONTAL CAROUSEL
+         6 Artwork Styles: Good Vibes, Topography, Alpine, Marble, Tree, Geo Art
+         ========================================================================= -->
+    <section class="ron-section ron-section-lg border-b border-[#8B77A4]/20 bg-[#F9F8FC]">
+      <div class="ron-container">
+        
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+          <div>
+            <h2 class="font-heading text-3xl sm:text-5xl text-[#252425]">
+              Design Ideas
+            </h2>
+            <p class="text-[#5A585B] text-sm sm:text-base font-light mt-1">
+              Popular styles, quotes, and themes to get you started.
+            </p>
+          </div>
+
+          <div class="flex items-center gap-4">
+            <div class="flex items-center gap-2">
+              <button id="ideas-prev-btn" class="w-10 h-10 rounded-full border border-[#8B77A4]/30 flex items-center justify-center bg-white hover:border-[#5336CC] transition" aria-label="Previous Design">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+              </button>
+              <button id="ideas-next-btn" class="w-10 h-10 rounded-full border border-[#8B77A4]/30 flex items-center justify-center bg-white hover:border-[#5336CC] transition" aria-label="Next Design">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+              </button>
+            </div>
+            <a href="customizer.html" class="font-mono text-xs font-bold text-[#5336CC] hover:underline flex items-center gap-1">
+              <span>View All</span>
+              <span>&rarr;</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Horizontal Carousel Track -->
+        <div class="ron-ideas-carousel-wrapper">
+          <div id="ideas-track" class="ron-ideas-track">
+            
+            <!-- Idea 1: Good Vibes Only -->
+            <a href="customizer.html?template=good-vibes-only" class="ron-idea-card">
+              <div class="ron-idea-preview">
+                <img src="assets/case-design-goodvibes.svg" alt="Good Vibes Only Case Design" loading="lazy" />
+              </div>
+              <h4 class="ron-idea-title">Good Vibes Only</h4>
+              <span class="ron-idea-tag">Typographic</span>
+            </a>
+
+            <!-- Idea 2: Topography Gold -->
+            <a href="customizer.html?template=topography-gold" class="ron-idea-card">
+              <div class="ron-idea-preview">
+                <img src="assets/case-design-topography.svg" alt="Topography Gold Case Design" loading="lazy" />
+              </div>
+              <h4 class="ron-idea-title">Topography Gold</h4>
+              <span class="ron-idea-tag">Contour Lines</span>
+            </a>
+
+            <!-- Idea 3: Alpine Monochrome -->
+            <a href="customizer.html?template=alpine-monochrome" class="ron-idea-card">
+              <div class="ron-idea-preview">
+                <img src="assets/case-design-alpine.svg" alt="Alpine Monochrome Case Design" loading="lazy" />
+              </div>
+              <h4 class="ron-idea-title">Alpine Monochrome</h4>
+              <span class="ron-idea-tag">Landscape</span>
+            </a>
+
+            <!-- Idea 4: White Marble -->
+            <a href="customizer.html?template=white-marble" class="ron-idea-card">
+              <div class="ron-idea-preview">
+                <img src="assets/case-design-marble.svg" alt="White Marble Case Design" loading="lazy" />
+              </div>
+              <h4 class="ron-idea-title">White Marble</h4>
+              <span class="ron-idea-tag">Stone Veins</span>
+            </a>
+
+            <!-- Idea 5: Geometric Fir Tree -->
+            <a href="customizer.html?template=geometric-tree" class="ron-idea-card">
+              <div class="ron-idea-preview">
+                <img src="assets/case-design-tree.svg" alt="Geometric Fir Tree Case Design" loading="lazy" />
+              </div>
+              <h4 class="ron-idea-title">Geometric Tree</h4>
+              <span class="ron-idea-tag">Minimalist Line</span>
+            </a>
+
+            <!-- Idea 6: Vibrant Geo Art -->
+            <a href="customizer.html?template=vibrant-geo-art" class="ron-idea-card">
+              <div class="ron-idea-preview">
+                <img src="assets/case-design-geoart.svg" alt="Vibrant Geo Art Case Design" loading="lazy" />
+              </div>
+              <h4 class="ron-idea-title">Vibrant Geo Art</h4>
+              <span class="ron-idea-tag">Modern Abstract</span>
+            </a>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         SECTION 05: "From city streets to mountain peaks."
+         Cinematic Dark Section + 4 Feature Callouts
+         ========================================================================= -->
+    <section class="ron-peaks-section py-28 sm:py-36">
+      <div class="ron-container">
+        
+        <div class="ron-peaks-grid">
+          
+          <!-- Left: Headline & Call to Action -->
+          <div class="space-y-6">
+            <div class="micro-label white">BUILT FOR EVERY MOMENT</div>
+            <h2 class="font-heading text-4xl sm:text-6xl text-[#FEFEFF] leading-tight text-split-reveal">
+              From city streets to mountain peaks.
+            </h2>
+            <p class="text-base sm:text-lg text-[#FEFEFF]/80 font-light leading-relaxed">
+              Same protection. Different adventures. Engineered to endure asphalt drops, mountain trails, and the daily grind without adding unnecessary bulk.
+            </p>
+            <div>
+              <a href="shop.html" class="ron-btn ron-btn-primary ron-btn-lg group shadow-xl">
+                <span>Shop All</span>
+                <span class="transition-transform group-hover:translate-x-1">&rarr;</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Center: Tilted Phone Case with Floating 3D Rocks -->
+          <div class="relative flex items-center justify-center">
+            <div class="ron-floating-stage ron-peaks-stage !aspect-square">
+              <img src="assets/rock-1.svg" alt="3D Rock" class="ron-floating-rock w-24 -top-6 -right-4" />
+              <img src="assets/rock-3.svg" alt="3D Rock" class="ron-floating-rock w-16 bottom-6 -left-6" />
+              <img src="assets/rock-4.svg" alt="3D Rock" class="ron-floating-rock w-12 top-16 -left-4" />
+
+              <a href="shop.html?product=ron-matte-black">
+                <img
+                  src="assets/case-matte-black.svg"
+                  alt="Ron Phone Case hovering in mountain peaks"
+                  class="ron-hero-tilted-case ron-floating-case"
+                />
+              </a>
+            </div>
+          </div>
+
+          <!-- Right: 4 Tech Feature Callouts with Circular Tech Icons -->
+          <div class="ron-peak-features">
+            
+            <div class="ron-peak-feature-card">
+              <div class="ron-peak-icon-circle">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+              </div>
+              <div>
+                <h4 class="font-heading text-base font-bold text-white">Shock Absorbent</h4>
+                <p class="text-xs text-white/70">Multi-layer internal dispersal ribs</p>
+              </div>
+            </div>
+
+            <div class="ron-peak-feature-card">
+              <div class="ron-peak-icon-circle">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                </svg>
+              </div>
+              <div>
+                <h4 class="font-heading text-base font-bold text-white">Scratch Resistant</h4>
+                <p class="text-xs text-white/70">Nano-ceramic matte anti-abrasion finish</p>
+              </div>
+            </div>
+
+            <div class="ron-peak-feature-card">
+              <div class="ron-peak-icon-circle">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"/>
+                </svg>
+              </div>
+              <div>
+                <h4 class="font-heading text-base font-bold text-white">Slim & Lightweight</h4>
+                <p class="text-xs text-white/70">Precision 1.8mm thin profile</p>
+              </div>
+            </div>
+
+            <div class="ron-peak-feature-card">
+              <div class="ron-peak-icon-circle">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                </svg>
+              </div>
+              <div>
+                <h4 class="font-heading text-base font-bold text-white">Wireless Charging</h4>
+                <p class="text-xs text-white/70">Seamless Qi2 & MagSafe throughput</p>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         SECTION 06: "Your Vision. Our Craft."
+         Clean On-Demand Callout Banner with Sketched Annotation
+         ========================================================================= -->
+    <section class="ron-vision-section py-24 sm:py-32">
+      <div class="ron-container">
+        
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          
+          <div class="space-y-6">
+            <div class="micro-label">ON DEMAND</div>
+            <h2 class="font-heading text-4xl sm:text-6xl text-[#252425] leading-tight text-split-reveal">
+              Your Vision. Our Craft.
+            </h2>
+            <p class="text-[#5A585B] text-base sm:text-lg font-light leading-relaxed">
+              Custom phone cases, made just for you. Perfect for gifts, brands, or your next big idea. Upload your art or collaborate with our studio designers.
+            </p>
+            <div class="pt-2">
+              <a href="customizer.html" class="ron-btn ron-btn-primary ron-btn-lg group shadow-xl">
+                <span>Start Customizing</span>
+                <span class="transition-transform group-hover:translate-x-1">&rarr;</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="relative flex items-center justify-center">
+            <div class="ron-floating-stage ron-vision-stage !aspect-[1/1.2]">
+              <img src="assets/rock-2.svg" alt="Rock Fragment" class="ron-floating-rock w-16 -top-4 -right-4" />
+              <img src="assets/rock-4.svg" alt="Rock Fragment" class="ron-floating-rock w-12 bottom-6 -left-6" />
+
+              <a href="customizer.html?style=alpine">
+                <img
+                  src="assets/case-design-alpine.svg"
+                  alt="Custom Alpine Phone Case"
+                  class="ron-hero-tilted-case ron-floating-case"
+                />
+              </a>
+
+              <!-- Handwritten Callout Annotation -->
+              <div class="ron-sketch-annotation" style="top: 15%; right: 4%;">
+                <span class="ron-sketch-text text-sm">Fully Customizable Prints</span>
+                <svg width="45" height="30" viewBox="0 0 60 40" fill="none" class="text-[#252425]">
+                  <path d="M50 5 C40 20, 20 25, 8 32" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-dasharray="3 3"/>
+                  <path d="M12 24 L6 33 L18 35" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         SECTION 07: "About RON" & Editorial Hiker Background
+         ========================================================================= -->
+    <section class="ron-about-story-section">
+      <div class="ron-container">
+        
+        <div class="max-w-xl space-y-6">
+          <div class="micro-label white">OUR STORY</div>
+          <h2 class="font-heading text-4xl sm:text-6xl text-white leading-tight text-split-reveal">
+            About RON
+          </h2>
+          <p class="text-base sm:text-lg text-white/80 font-light leading-relaxed">
+            We're a team of creators, designers, and problem solvers. RON was born from a simple idea &mdash; your phone case should be more than protection, it should be an extension of you.
+          </p>
+          <div class="pt-4">
+            <a href="craft.html" class="ron-btn ron-btn-primary ron-btn-lg group shadow-2xl">
+              <span>Our Story</span>
+              <span class="transition-transform group-hover:translate-x-1">&rarr;</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Global Slide-Out Glassmorphic Cart Drawer -->
+  <div id="ron-cart-overlay" class="ron-cart-drawer-overlay">
+    <div class="ron-cart-drawer">
+      <div class="ron-cart-header">
+        <div class="flex items-center gap-3">
+          <h3 class="font-heading text-lg font-bold text-[#252425]">Your Shopping Bag</h3>
+          <span class="text-xs font-mono text-[#5336CC] font-bold uppercase tracking-wider">RON ATELIER</span>
+        </div>
+        <button id="ron-cart-close" class="ron-cart-close" aria-label="Close Bag">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <div class="px-7 pt-4 bg-[#F8F7FB]">
+        <div id="ron-free-shipping-msg" class="text-xs font-mono text-[#5A585B]"></div>
+        <div class="ron-progress-track">
+          <div id="ron-free-shipping-bar" class="ron-progress-bar" style="width: 0%"></div>
+        </div>
+      </div>
+
+      <div id="ron-cart-items-list" class="ron-cart-items"></div>
+
+      <div class="ron-cart-footer">
+        <div class="flex gap-2 mb-4">
+          <input
+            id="ron-promo-input"
+            type="text"
+            placeholder="PROMO CODE (e.g. RON15)"
+            class="flex-1 bg-white border border-[#8B77A4]/25 rounded-xl px-4 py-2 text-xs font-mono text-[#252425] placeholder-[#8B77A4] uppercase outline-none focus:border-[#5336CC]"
+          />
+          <button id="ron-promo-apply" class="ron-btn ron-btn-secondary ron-btn-sm px-4">Apply</button>
+        </div>
+
+        <div class="space-y-2 mb-5 font-mono text-xs">
+          <div class="flex justify-between text-[#5A585B]">
+            <span>Subtotal</span>
+            <span id="ron-cart-subtotal" class="text-[#252425] font-bold">$0.00</span>
+          </div>
+          <div id="ron-cart-discount-row" class="flex justify-between text-[#5336CC]" style="display: none;">
+            <span>Privilege Discount</span>
+            <span id="ron-cart-discount">-$0.00</span>
+          </div>
+          <div class="flex justify-between text-[#5A585B]">
+            <span>Express Courier</span>
+            <span id="ron-cart-shipping" class="text-[#252425] font-bold">$12.00</span>
+          </div>
+          <div class="flex justify-between text-base pt-3 border-t border-[#8B77A4]/20 text-[#252425] font-black">
+            <span>Total</span>
+            <span id="ron-cart-total" class="text-[#5336CC]">$0.00</span>
+          </div>
+        </div>
+
+        <a href="checkout.html" class="ron-btn ron-btn-primary w-full justify-center shadow-xl">
+          <span>Proceed to Secure Checkout</span>
+          <span class="font-mono text-xs">&rarr;</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Global High-Contrast Footer (Matching Reference Sheet) -->
+  <footer class="ron-footer !bg-[#121214]">
+    <div class="ron-container">
+      
+      <!-- Top Row: Logo, Nav, Social -->
+      <div class="flex flex-col md:flex-row items-center justify-between pb-12 border-b border-white/10 gap-6">
+        <a href="index.html" class="ron-logo text-[#FEFEFF]">
+          <div class="ron-logo-mark">R</div>
+          <span class="tracking-tight text-white font-black text-2xl">RON</span>
+        </a>
+
+        <div class="flex items-center gap-8 font-mono text-xs uppercase tracking-wider text-[#B4B0BE]">
+          <a href="shop.html" class="hover:text-white transition">Shop</a>
+          <a href="customizer.html" class="hover:text-white transition">On-Demand</a>
+          <a href="craft.html" class="hover:text-white transition">About</a>
+        </div>
+
+        <!-- Social Icons -->
+        <div class="flex items-center gap-4 text-white/70">
+          <a href="#" class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center hover:text-white hover:bg-white/10 transition" aria-label="X">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+          <a href="#" class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center hover:text-white hover:bg-white/10 transition" aria-label="Instagram">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+          </a>
+          <a href="#" class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center hover:text-white hover:bg-white/10 transition" aria-label="TikTok">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1.04-.1z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Studio Clock & System Status -->
+      <div class="py-6 border-b border-white/10 flex flex-wrap justify-between items-center text-xs font-mono text-[#8B8796]">
+        <div id="ron-live-clock">LAB TIME: 00:00:00 UTC &middot; TOKYO / SF / LONDON</div>
+        <div class="flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-[#5336CC] animate-ping"></span>
+          <span>SYSTEM STATUS: OPERATIONAL</span>
+        </div>
+      </div>
+
+      <!-- Bottom Bar: Copyright & Legal -->
+      <div class="pt-8 flex flex-col sm:flex-row justify-between items-center text-xs font-mono text-[#8B8796] gap-4">
+        <div>&copy; 2026 RON. All rights reserved.</div>
+        <div class="flex items-center gap-6">
+          <a href="#" class="hover:text-white transition">Privacy</a>
+          <a href="#" class="hover:text-white transition">Terms</a>
+          <a href="#" class="hover:text-white transition">Contact</a>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script type="module">
+    import { initGlobalUI } from './js/app.js';
+    import { sounds, cart, showToast, CATALOG, BEST_SELLERS } from './js/store.js';
+    import { initMotion } from './js/motion.js';
+
+    initGlobalUI();
+    initMotion();
+
+    // 1. Quick Add to Bag on 5 Best Sellers
+    document.querySelectorAll('.ron-quick-add').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        sounds.click('soft');
+        const pId = btn.getAttribute('data-id');
+        const product = CATALOG.find(p => p.id === pId) || BEST_SELLERS.find(p => p.id === pId);
+        if (product) {
+          cart.addItem({
+            id: product.id,
+            name: product.name,
+            priceUSD: product.priceUSD,
+            device: product.defaultDevice || 'iPhone 16 Pro Max',
+            finish: product.finish || 'matte',
+            colorName: product.colorNames[0],
+            studioImg: product.svgImg || product.studioImg,
+            monogramText: '',
+            magsafeStyle: 'machined'
+          });
+          showToast(`Added ${product.name} to Bag`, 'success', 'View Bag', () => {
+            document.getElementById('ron-cart-toggle')?.click();
+          });
+        }
+      });
+    });
+
+    // 2. Design Ideas Carousel Controls
+    const track = document.getElementById('ideas-track');
+    const prevBtn = document.getElementById('ideas-prev-btn');
+    const nextBtn = document.getElementById('ideas-next-btn');
+    if (track && prevBtn && nextBtn) {
+      prevBtn.addEventListener('click', () => {
+        sounds.click('soft');
+        track.scrollBy({ left: -280, behavior: 'smooth' });
+      });
+      nextBtn.addEventListener('click', () => {
+        sounds.click('soft');
+        track.scrollBy({ left: 280, behavior: 'smooth' });
+      });
+    }
+
+    // 3. Search Modal Trigger
+    const searchBtn = document.getElementById('ron-search-btn');
+    if (searchBtn) {
+      searchBtn.addEventListener('click', () => {
+        sounds.click('soft');
+        const query = prompt('Search Ron Phone Cases (e.g. Matte, Carbon, Stone, Blue, Topography):');
+        if (query) {
+          window.location.href = `shop.html?search=${encodeURIComponent(query)}`;
+        }
+      });
+    }
+  </script>
+</body>
+</html>
